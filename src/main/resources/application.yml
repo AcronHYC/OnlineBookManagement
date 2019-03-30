@@ -1,0 +1,23 @@
+spring:
+  profiles:
+    active: prod
+  datasource:
+    url: jdbc:mysql://localhost:3306/onlinebookmanagement?useUnicode=true&characterEncoding=utf8&characterSetResults=utf8
+    username: root
+    password: 123456
+    driverClassName: com.mysql.cj.jdbc.Driver
+    initialSize: 1  #初始化大小
+    minIdle: 1  #空闲连接池的大小
+    maxActive: 50 #最大激活数量
+
+server:
+  port: 8080
+  servlet:
+    context-path: /OnlineBookManagement
+
+mybatis:
+  mapper-locations: classpath*:mapper/*Mapper.xml
+  type-aliases-package: com.hyc.onlineBookManagement.bean
+
+
+

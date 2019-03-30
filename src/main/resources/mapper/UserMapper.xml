@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hyc.onlineBookManagement.dao.UserDao">
+    <resultMap id="userInfoMap" type="com.hyc.onlineBookManagement.bean.User">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="password" property="password"/>
+        <result column="IDcard" property="IDcard"/>
+        <result column="telephone" property="telephone"/>
+        <result column="email" property="email"/>
+    </resultMap>
+
+    <sql id="userInfo_list">
+        id,name,password,IDcard,telephone,email
+    </sql>
+
+    <select id="selectUserById" parameterType="java.lang.String" resultType="com.hyc.onlineBookManagement.bean.User">
+        select *
+        from user_info
+        where id=#{id}
+    </select>
+
+    <select id="selectUserByNameAndPassword" resultType="com.hyc.onlineBookManagement.bean.User">
+      select *
+      from user_info u
+      where u.name=#{0} and u.password=#{1}
+    </select>
+
+    <insert id="insertUser" parameterType="com.hyc.onlineBookManagement.bean.User">
+        insert into user_info(
+        <include refid="userInfo_list"/>
+        )
+        values (#{id},#{name},#{password},#{IDcard},#{telephone},#{email})
+    </insert>
+</mapper>
