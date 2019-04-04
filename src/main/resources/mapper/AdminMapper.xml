@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hyc.onlineBookManagement.dao.AdminDao">
+    <resultMap id="adminInfoMap" type="com.hyc.onlineBookManagement.bean.Admin">
+        <id column="uuid" property="uuid"/>
+        <result column="adminName" property="adminName"/>
+        <result column="password" property="password"/>
+        <result column="realName" property="realName"/>
+        <result column="sex" property="sex"/>
+        <result column="telephone" property="telephone"/>
+        <result column="email" property="email"/>
+        <result column="role" property="role"/>
+    </resultMap>
+
+    <sql id="adminInfo_list">
+        uuid,adminName,password,realName,sex,email,role
+    </sql>
+
+    <select id="selectAdminByParams" resultType="com.hyc.onlineBookManagement.bean.Admin">
+        select *
+        from admin_info a
+        <where>
+            <if test="uuid != null and uuid !=''">
+              a.uuid=#{uuid}
+            </if>
+            <if test="adminName != null and adminName !=''">
+                a.adminName=#{adminName}
+            </if>
+            <if test="password != null and password !=''">
+                a.password=#{password}
+            </if>
+            <if test="realName != null and realName !=''">
+                a.realName=#{realName}
+            </if>
+            <if test="sex != null and sex !=''">
+                a.sex=#{sex}
+            </if>
+            <if test="telephone != null and telephone !=''">
+                a.telephone=#{telephone}
+            </if>
+            <if test="email != null and email !=''">
+                a.email=#{email}
+            </if>
+            <if test="role != null and role !=''">
+                a.role=#{role}
+            </if>
+        </where>
+    </select>
+
+</mapper>

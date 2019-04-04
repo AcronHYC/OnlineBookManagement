@@ -2,10 +2,24 @@ package com.hyc.onlineBookManagement.service;
 
 import com.hyc.onlineBookManagement.bean.User;
 
-public interface UserService {
-    User queryUserById(String id);
+import java.util.List;
 
-    User login(String name,String password);
+public interface UserService {
+    List<User> queryUserByParams(String id,
+                                 String userName,
+                                 String realName,
+                                 String password,
+                                 String IDcard,
+                                 String telephone,
+                                 String email);
 
     boolean addUser(User user);
+
+    boolean updateUser(String id,
+                       String userName,
+                       String realName,
+                       String password,
+                       String IDcard,
+                       String telephone,
+                       String email);
 }

@@ -4,7 +4,8 @@
 <mapper namespace="com.hyc.onlineBookManagement.dao.UserDao">
     <resultMap id="userInfoMap" type="com.hyc.onlineBookManagement.bean.User">
         <id column="id" property="id"/>
-        <result column="name" property="name"/>
+        <result column="userName" property="userrName"/>
+        <result column="realName" property="realName"/>
         <result column="password" property="password"/>
         <result column="IDcard" property="IDcard"/>
         <result column="telephone" property="telephone"/>
@@ -12,25 +13,64 @@
     </resultMap>
 
     <sql id="userInfo_list">
-        id,name,password,IDcard,telephone,email
+        id,userName,realName,password,IDcard,telephone,email
     </sql>
-
-    <select id="selectUserById" parameterType="java.lang.String" resultType="com.hyc.onlineBookManagement.bean.User">
-        select *
-        from user_info
-        where id=#{id}
-    </select>
-
-    <select id="selectUserByNameAndPassword" resultType="com.hyc.onlineBookManagement.bean.User">
+    <select id="selectUserByParams" resultType="com.hyc.onlineBookManagement.bean.User">
       select *
       from user_info u
-      where u.name=#{0} and u.password=#{1}
+      <where>
+          <if test="id != null and id != ''">
+            u.id=#{id}
+          </if>
+          <if test="userName != null and userName != ''">
+              and u.userName=#{userName}
+          </if>
+          <if test="realName != null and realName != ''">
+            and u.realName=#{realName}
+          </if>
+          <if test="password != null and password != ''">
+            and u.password=#{password}
+          </if>
+          <if test="IDcard != null and IDcard != ''">
+            and u.IDcard=#{IDcard}
+          </if>
+          <if test="telephone != null and telephone != ''">
+            and u.telephone=#{telephone}
+          </if>
+          <if test="email != null and email != ''">
+            and u.email=#{email}
+          </if>
+      </where>
     </select>
 
     <insert id="insertUser" parameterType="com.hyc.onlineBookManagement.bean.User">
         insert into user_info(
         <include refid="userInfo_list"/>
         )
-        values (#{id},#{name},#{password},#{IDcard},#{telephone},#{email})
+        values (#{id},#{userName},#{realName},#{password},#{IDcard},#{telephone},#{email})
     </insert>
+
+    <update id="updateUser">
+        update user_info
+        <trim prefix="set" suffixOverrides="," suffix="where id =#{id}">
+          <if test="userName != null and userName != ''">
+            userName=#{userName},
+          </if>
+          <if test="realName != null and realName != ''">
+              realName=#{realName},
+          </if>
+          <if test="password != null and password != ''">
+              password=#{password},
+          </if>
+          <if test="IDcard != null and IDcard != ''">
+              IDcard=#{IDcard},
+          </if>
+          <if test="telephone != null and telephone != ''">
+              telephone=#{telephone},
+          </if>
+          <if test="email != null and email !=''">
+              email=#{email},
+          </if>
+        </trim>
+    </update>
 </mapper>
