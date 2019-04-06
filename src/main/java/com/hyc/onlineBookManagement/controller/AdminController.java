@@ -29,4 +29,16 @@ public class AdminController {
         String role=request.getParameter("role");
         return adminService.queryAdminByParams(uuid,adminName,password,realName,sex,telephone,email,role);
     }
+
+    @ResponseBody
+    @RequestMapping("/queryAdminByPage")
+    public String queryAdminByPage(HttpServletRequest request){
+        try {
+            int page = Integer.parseInt(request.getParameter("page"));
+            int pageSize = Integer.parseInt(request.getParameter("pageSize"));
+            return adminService.queryAdminByPage(pageSize, page);
+        }catch (Exception e){
+            return adminService.queryAdminByPage(null, null);
+        }
+    }
 }

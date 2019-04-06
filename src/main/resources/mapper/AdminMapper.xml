@@ -47,4 +47,15 @@
         </where>
     </select>
 
+    <select id="selectAdminCount" resultType="java.lang.Integer">
+        select COUNT(*)
+        from admin_info
+    </select>
+
+    <select id="selectAdminByPage" resultType="com.hyc.onlineBookManagement.bean.Admin">
+        select *
+        from admin_info
+        limit #{startIndex},#{pageSize}
+    </select>
+
 </mapper>

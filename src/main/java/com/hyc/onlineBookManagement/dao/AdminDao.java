@@ -16,4 +16,8 @@ public interface AdminDao {
                                     @Param("telephone")String telephone,
                                     @Param("email")String email,
                                     @Param("role")String role);
+
+    List<Admin> selectAdminByPage(@Param("startIndex")Integer startIndex,@Param("pageSize")Integer pageSize);
+
+    int selectAdminCount();
 }

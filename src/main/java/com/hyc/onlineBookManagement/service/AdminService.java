@@ -15,4 +15,6 @@ public interface AdminService {
                                    String telephone,
                                    String email,
                                    String role);
+
+    String queryAdminByPage(Integer pageSize,Integer page);
 }

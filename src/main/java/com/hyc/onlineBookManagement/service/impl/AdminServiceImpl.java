@@ -1,11 +1,15 @@
 package com.hyc.onlineBookManagement.service.impl;
 
+import com.alibaba.fastjson.JSONObject;
+import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.hyc.onlineBookManagement.bean.Admin;
+import com.hyc.onlineBookManagement.bean.Page;
 import com.hyc.onlineBookManagement.dao.AdminDao;
 import com.hyc.onlineBookManagement.service.AdminService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service(value = "adminService")
@@ -23,5 +27,26 @@ public class AdminServiceImpl implements AdminService {
                                           String email,
                                           String role){
         return adminDao.selectAdminByParams(uuid,adminName,password,realName,sex,telephone,email,role);
+    }
+
+    @Override
+    public String queryAdminByPage(Integer pageSize,Integer page){
+        int total=adminDao.selectAdminCount();
+        List<Admin> adminList=new ArrayList<Admin>();
+        JSONObject jsonObject=new JSONObject();
+        Page pageObject=null;
+        if(page!=null){
+            pageObject=new Page(page,pageSize,total);
+            adminList=adminDao.selectAdminByPage(pageObject.getStartIndex(),pageSize);
+            jsonObject.put("jsonAdminList",JSONObject.toJSON(adminList));
+            jsonObject.put("pagination",JSONObject.toJSON(pageObject));
+            return jsonObject.toJSONString();
+        }else{
+            pageObject=new Page(2,10,total);
+            adminList=adminDao.selectAdminByPage(pageObject.getStartIndex(),pageObject.getPageSize());
+            jsonObject.put("jsonAdminList",JSONObject.toJSON(adminList));
+            jsonObject.put("pagination",JSONObject.toJSON(pageObject));
+            return jsonObject.toJSONString();
+        }
     }
 }
