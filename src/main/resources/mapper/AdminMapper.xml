@@ -49,7 +49,33 @@
 
     <select id="selectAdminCount" resultType="java.lang.Integer">
         select COUNT(*)
-        from admin_info
+        from admin_info a
+        <where>
+            <if test="uuid != null and uuid !=''">
+                a.uuid like  "%"#{uuid}"%"
+            </if>
+            <if test="adminName != null and adminName !=''">
+                a.adminName like "%"#{adminName}"%"
+            </if>
+            <if test="password != null and password !=''">
+                a.password like "%"#{password}"%"
+            </if>
+            <if test="realName != null and realName !=''">
+                a.realName like "%"#{realName}"%"
+            </if>
+            <if test="sex != null and sex !=''">
+                a.sex like "%"#{sex}"%"
+            </if>
+            <if test="telephone != null and telephone !=''">
+                a.telephone like "%"#{telephone}"%"
+            </if>
+            <if test="email != null and email !=''">
+                a.email like "%"#{email}"%"
+            </if>
+            <if test="role != null and role !=''">
+                a.role like "%"#{role}"%"
+            </if>
+        </where>
     </select>
 
     <select id="selectAdminByPage" resultType="com.hyc.onlineBookManagement.bean.Admin">

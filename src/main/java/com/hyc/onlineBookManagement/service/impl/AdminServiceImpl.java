@@ -31,7 +31,7 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public String queryAdminByPage(Integer pageSize,Integer page){
-        int total=adminDao.selectAdminCount();
+        int total=adminDao.selectAdminCount(null,null,null,null,null,null,null,null);
         List<Admin> adminList=new ArrayList<Admin>();
         JSONObject jsonObject=new JSONObject();
         Page pageObject=null;
@@ -61,7 +61,7 @@ public class AdminServiceImpl implements AdminService {
                                            String role,
                                            Integer pageSize,
                                            Integer page){
-        int total=adminDao.selectAdminCount();
+        int total=adminDao.selectAdminCount(uuid,adminName,password,realName,sex,telephone,email,role);
         List<Admin> adminList=new ArrayList<Admin>();
         JSONObject jsonObject=new JSONObject();
         Page pageObject=null;
