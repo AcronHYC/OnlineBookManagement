@@ -41,4 +41,24 @@ public class AdminController {
             return adminService.queryAdminByPage(null, null);
         }
     }
+
+    @ResponseBody
+    @RequestMapping("/queryAdminByFuzzyAndPage")
+    public String queryAdminByFuzzyAndPage(HttpServletRequest request){
+        String uuid=request.getParameter("uuid");
+        String adminName=request.getParameter("adminName");
+        String password=request.getParameter("password");
+        String realName=request.getParameter("realName");
+        String sex=request.getParameter("sex");
+        String telephone=request.getParameter("telephone");
+        String email=request.getParameter("email");
+        String role=request.getParameter("role");
+        try{
+            int page = Integer.parseInt(request.getParameter("page"));
+            int pageSize = Integer.parseInt(request.getParameter("pageSize"));
+            return adminService.queryAdminByFuzzyAndPage(uuid,adminName,password,realName,sex,telephone,email,role,pageSize,page);
+        }catch (Exception e){
+            return adminService.queryAdminByFuzzyAndPage(uuid,adminName,password,realName,sex,telephone,email,role,null,null);
+        }
+    }
 }

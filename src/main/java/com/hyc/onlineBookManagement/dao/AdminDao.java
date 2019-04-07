@@ -20,4 +20,15 @@ public interface AdminDao {
     List<Admin> selectAdminByPage(@Param("startIndex")Integer startIndex,@Param("pageSize")Integer pageSize);
 
     int selectAdminCount();
+
+    List<Admin> seletAdminByFuzzyAndPage(@Param("uuid")String uuid,
+                                         @Param("adminName")String adminName,
+                                         @Param("password")String password,
+                                         @Param("realName")String realName,
+                                         @Param("sex")String sex,
+                                         @Param("telephone")String telephone,
+                                         @Param("email")String email,
+                                         @Param("role")String role,
+                                         @Param("startIndex")Integer startIndex,
+                                         @Param("pageSize")Integer pageSize);
 }

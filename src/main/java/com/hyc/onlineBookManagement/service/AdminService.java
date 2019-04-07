@@ -17,4 +17,15 @@ public interface AdminService {
                                    String role);
 
     String queryAdminByPage(Integer pageSize,Integer page);
+
+    String queryAdminByFuzzyAndPage(String uuid,
+                                    String adminName,
+                                    String password,
+                                    String realName,
+                                    String sex,
+                                    String telephone,
+                                    String email,
+                                    String role,
+                                    Integer pageSize,
+                                    Integer page);
 }
