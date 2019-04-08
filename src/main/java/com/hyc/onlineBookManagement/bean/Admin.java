@@ -9,6 +9,7 @@ public class Admin {
     private String telephone;
     private String email;
     private String role;
+    private String roleName;
 
     public String getUuid() {
         return uuid;
@@ -72,5 +73,13 @@ public class Admin {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public String getRoleName() {
+        return roleName;
+    }
+
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
     }
 }

@@ -25,13 +25,14 @@ public class AdminServiceImpl implements AdminService {
                                           String sex,
                                           String telephone,
                                           String email,
-                                          String role){
-        return adminDao.selectAdminByParams(uuid,adminName,password,realName,sex,telephone,email,role);
+                                          String role,
+                                          String roleName){
+        return adminDao.selectAdminByParams(uuid,adminName,password,realName,sex,telephone,email,role,roleName);
     }
 
     @Override
     public String queryAdminByPage(Integer pageSize,Integer page){
-        int total=adminDao.selectAdminCount(null,null,null,null,null,null,null,null);
+        int total=adminDao.selectAdminCount(null,null,null,null,null,null,null,null,null);
         List<Admin> adminList=new ArrayList<Admin>();
         JSONObject jsonObject=new JSONObject();
         Page pageObject=null;
@@ -59,24 +60,37 @@ public class AdminServiceImpl implements AdminService {
                                            String telephone,
                                            String email,
                                            String role,
+                                           String roleName,
                                            Integer pageSize,
                                            Integer page){
-        int total=adminDao.selectAdminCount(uuid,adminName,password,realName,sex,telephone,email,role);
+        int total=adminDao.selectAdminCount(uuid,adminName,password,realName,sex,telephone,email,role,roleName);
         List<Admin> adminList=new ArrayList<Admin>();
         JSONObject jsonObject=new JSONObject();
         Page pageObject=null;
         if(page!=null){
             pageObject=new Page(page,pageSize,total);
-            adminList=adminDao.seletAdminByFuzzyAndPage(uuid,adminName,password,realName,sex,telephone,email,role,pageObject.getStartIndex(),pageSize);
+            adminList=adminDao.seletAdminByFuzzyAndPage(uuid,adminName,password,realName,sex,telephone,email,role,roleName,pageObject.getStartIndex(),pageSize);
             jsonObject.put("jsonAdminList",JSONObject.toJSON(adminList));
             jsonObject.put("pagination",JSONObject.toJSON(pageObject));
             return jsonObject.toJSONString();
         }else{
             pageObject=new Page(1,10,total);
-            adminList=adminDao.seletAdminByFuzzyAndPage(uuid,adminName,password,realName,sex,telephone,email,role,pageObject.getStartIndex(),pageObject.getPageSize());
+            adminList=adminDao.seletAdminByFuzzyAndPage(uuid,adminName,password,realName,sex,telephone,email,role,roleName,pageObject.getStartIndex(),pageObject.getPageSize());
             jsonObject.put("jsonAdminList",JSONObject.toJSON(adminList));
             jsonObject.put("pagination",JSONObject.toJSON(pageObject));
             return jsonObject.toJSONString();
         }
+    }
+
+    @Override
+    public boolean addAdmin(Admin admin){
+        boolean flag=false;
+        try {
+            adminDao.insertAdmin(admin);
+            flag=true;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return flag;
     }
 }

@@ -10,10 +10,11 @@
         <result column="telephone" property="telephone"/>
         <result column="email" property="email"/>
         <result column="role" property="role"/>
+        <result column="roleName" property="roleName"/>
     </resultMap>
 
     <sql id="adminInfo_list">
-        uuid,adminName,password,realName,sex,email,role
+        uuid,adminName,password,realName,sex,telephone,email,role,roleName
     </sql>
 
     <select id="selectAdminByParams" resultType="com.hyc.onlineBookManagement.bean.Admin">
@@ -43,6 +44,9 @@
             </if>
             <if test="role != null and role !=''">
                 a.role=#{role}
+            </if>
+            <if test="roleName != null and roleName !=''">
+                a.roleName=#{roleName}
             </if>
         </where>
     </select>
@@ -74,6 +78,9 @@
             </if>
             <if test="role != null and role !=''">
                 a.role like "%"#{role}"%"
+            </if>
+            <if test="roleName != null and roleName !=''">
+                a.roleName like "%"#{roleName}"%"
             </if>
         </where>
     </select>
@@ -112,8 +119,19 @@
             <if test="role != null and role !=''">
                 a.role like "%"#{role}"%"
             </if>
+            <if test="roleName != null and roleName !=''">
+                a.roleName like "%"#{roleName}"%"
+            </if>
         </where>
         limit #{startIndex},#{pageSize}
     </select>
+    
+    <insert id="insertAdmin" parameterType="com.hyc.onlineBookManagement.bean.Admin">
+        insert into
+        admin_info (
+        <include refid="adminInfo_list"/>
+        )
+        values (#{uuid},#{adminName},#{password},#{realName},#{sex},#{telephone},#{email},#{role},#{roleName})
+    </insert>
 
 </mapper>

@@ -15,7 +15,8 @@ public interface AdminDao {
                                     @Param("sex")String sex,
                                     @Param("telephone")String telephone,
                                     @Param("email")String email,
-                                    @Param("role")String role);
+                                    @Param("role")String role,
+                                    @Param("roleName")String roleName);
 
     List<Admin> selectAdminByPage(@Param("startIndex")Integer startIndex,@Param("pageSize")Integer pageSize);
 
@@ -26,7 +27,8 @@ public interface AdminDao {
                          @Param("sex")String sex,
                          @Param("telephone")String telephone,
                          @Param("email")String email,
-                         @Param("role")String role);
+                         @Param("role")String role,
+                         @Param("roleName")String roleName);
 
     List<Admin> seletAdminByFuzzyAndPage(@Param("uuid")String uuid,
                                          @Param("adminName")String adminName,
@@ -36,6 +38,9 @@ public interface AdminDao {
                                          @Param("telephone")String telephone,
                                          @Param("email")String email,
                                          @Param("role")String role,
+                                         @Param("roleName")String roleName,
                                          @Param("startIndex")Integer startIndex,
                                          @Param("pageSize")Integer pageSize);
+
+    int insertAdmin(Admin admin);
 }

@@ -14,7 +14,8 @@ public interface AdminService {
                                    String sex,
                                    String telephone,
                                    String email,
-                                   String role);
+                                   String role,
+                                   String roleName);
 
     String queryAdminByPage(Integer pageSize,Integer page);
 
@@ -26,6 +27,9 @@ public interface AdminService {
                                     String telephone,
                                     String email,
                                     String role,
+                                    String roleName,
                                     Integer pageSize,
                                     Integer page);
+
+    boolean addAdmin(Admin admin);
 }
