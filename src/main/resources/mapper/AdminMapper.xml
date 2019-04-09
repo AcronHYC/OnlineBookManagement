@@ -134,4 +134,33 @@
         values (#{uuid},#{adminName},#{password},#{realName},#{sex},#{telephone},#{email},#{role},#{roleName})
     </insert>
 
+    <update id="updateAdmin">
+        update admin_info a
+        <trim prefix="set" suffixOverrides="," suffix="where uuid =#{uuid}">
+            <if test="adminName != null and adminName !=''">
+                a.adminName=#{adminName},
+            </if>
+            <if test="password != null and password !=''">
+                a.password=#{password},
+            </if>
+            <if test="realName != null and realName !=''">
+                a.realName=#{realName},
+            </if>
+            <if test="sex != null and sex !=''">
+                a.sex=#{sex},
+            </if>
+            <if test="telephone != null and telephone !=''">
+                a.telephone=#{telephone},
+            </if>
+            <if test="email != null and email !=''">
+                a.email=#{email},
+            </if>
+            <if test="role != null and role !=''">
+                a.role=#{role},
+            </if>
+            <if test="roleName != null and roleName !=''">
+                a.roleName=#{roleName},
+            </if>
+        </trim>
+    </update>
 </mapper>

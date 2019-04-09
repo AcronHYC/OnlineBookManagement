@@ -32,4 +32,15 @@ public interface AdminService {
                                     Integer page);
 
     boolean addAdmin(Admin admin);
+
+    boolean updateAdmin(String uuid,
+                        String adminName,
+                        String password,
+                        String realName,
+                        String sex,
+                        String telephone,
+                        String email,
+                        String role,
+                        String roleName);
+
 }

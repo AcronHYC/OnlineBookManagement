@@ -43,4 +43,14 @@ public interface AdminDao {
                                          @Param("pageSize")Integer pageSize);
 
     int insertAdmin(Admin admin);
+
+    int updateAdmin(@Param("uuid")String uuid,
+                    @Param("adminName")String adminName,
+                    @Param("password")String password,
+                    @Param("realName")String realName,
+                    @Param("sex")String sex,
+                    @Param("telephone")String telephone,
+                    @Param("email")String email,
+                    @Param("role")String role,
+                    @Param("roleName")String roleName);
 }

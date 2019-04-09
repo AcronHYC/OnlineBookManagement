@@ -93,4 +93,24 @@ public class AdminServiceImpl implements AdminService {
         }
         return flag;
     }
+
+    @Override
+    public boolean updateAdmin(String uuid,
+                               String adminName,
+                               String password,
+                               String realName,
+                               String sex,
+                               String telephone,
+                               String email,
+                               String role,
+                               String roleName){
+        boolean flag=false;
+        try {
+            adminDao.updateAdmin(uuid,adminName,password,realName,sex,telephone,email,role,roleName);
+            flag=true;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return flag;
+    }
 }
