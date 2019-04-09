@@ -46,6 +46,25 @@ public class UserController {
     }
 
     @ResponseBody
+    @RequestMapping("/queryUserByFuzzyAndPage")
+    public String queryUserByFuzzyAndPage(HttpServletRequest request) {
+        String id=request.getParameter("id");
+        String userName=request.getParameter("userName");
+        String realName=request.getParameter("realName");
+        String password=request.getParameter("password");
+        String IDcard=request.getParameter("IDcard");
+        String telephone=request.getParameter("telephone");
+        String email=request.getParameter("email");
+        try {
+            int page = Integer.parseInt(request.getParameter("page"));
+            int pageSize = Integer.parseInt(request.getParameter("pageSize"));
+            return userService.queryUserByFuzzyAndPage(id,userName,realName,password,IDcard,telephone,email,pageSize,page);
+        }catch (Exception e){
+            return userService.queryUserByFuzzyAndPage(id,userName,realName,password,IDcard,telephone,email,null,null);
+        }
+    }
+
+    @ResponseBody
     @RequestMapping("/updateUser")
     public boolean updateUser(HttpServletRequest request){
         String id=request.getParameter("id");

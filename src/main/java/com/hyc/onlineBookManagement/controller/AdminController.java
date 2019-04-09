@@ -116,4 +116,11 @@ public class AdminController {
         }
         return adminService.updateAdmin(uuid, adminName, password, realName, sex, telephone, email, role, roleName);
     }
+
+    @ResponseBody
+    @RequestMapping(value="/deleteAdmin")
+    public boolean deleteAdmin(@RequestBody Map<String,String> params){
+        String uuid=params.get("uuid");
+        return adminService.deleteAdmin(uuid);
+    }
 }

@@ -1,11 +1,14 @@
 package com.hyc.onlineBookManagement.service.impl;
 
+import com.alibaba.fastjson.JSONObject;
+import com.hyc.onlineBookManagement.bean.Page;
 import com.hyc.onlineBookManagement.bean.User;
 import com.hyc.onlineBookManagement.dao.UserDao;
 import com.hyc.onlineBookManagement.service.UserService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service(value = "userService")
@@ -22,6 +25,35 @@ public class UserServiceImpl implements UserService {
                                         String telephone,
                                         String email){
         return userDao.selectUserByParams(id,userName,realName,password,IDcard,telephone,email);
+    }
+
+    @Override
+    public String queryUserByFuzzyAndPage(String id,
+                                          String userName,
+                                          String realName,
+                                          String password,
+                                          String IDcard,
+                                          String telephone,
+                                          String email,
+                                          Integer pageSize,
+                                          Integer page){
+        int total=userDao.selectUserCount(id,userName,realName,password,IDcard,telephone,email);
+        List<User> adminList=new ArrayList<User>();
+        JSONObject jsonObject=new JSONObject();
+        Page pageObject=null;
+        if(page!=null){
+            pageObject=new Page(page,pageSize,total);
+            adminList=userDao.selectUserByFuzzyAndPage(id,userName,realName,password,IDcard,telephone,email,pageObject.getStartIndex(),pageSize);
+            jsonObject.put("jsonUserList",JSONObject.toJSON(adminList));
+            jsonObject.put("pagination",JSONObject.toJSON(pageObject));
+            return jsonObject.toJSONString();
+        }else{
+            pageObject=new Page(1,10,total);
+            adminList=userDao.selectUserByFuzzyAndPage(id,userName,realName,password,IDcard,telephone,email,pageObject.getStartIndex(),pageObject.getPageSize());
+            jsonObject.put("jsonUserList",JSONObject.toJSON(adminList));
+            jsonObject.put("pagination",JSONObject.toJSON(pageObject));
+            return jsonObject.toJSONString();
+        }
     }
 
     @Override

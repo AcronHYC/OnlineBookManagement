@@ -16,6 +16,24 @@ public interface UserDao {
                                   @Param("telephone")String telephone,
                                   @Param("email")String email);
 
+    int selectUserCount(@Param("id")String id,
+                        @Param("userName")String userName,
+                        @Param("realName")String realName,
+                        @Param("password")String password,
+                        @Param("IDcard")String IDcard,
+                        @Param("telephone")String telephone,
+                        @Param("email")String email);
+
+    List<User> selectUserByFuzzyAndPage(@Param("id")String id,
+                                       @Param("userName")String userName,
+                                       @Param("realName")String realName,
+                                       @Param("password")String password,
+                                       @Param("IDcard")String IDcard,
+                                       @Param("telephone")String telephone,
+                                       @Param("email")String email,
+                                       @Param("startIndex")Integer startIndex,
+                                       @Param("pageSize")Integer pageSize);
+
     int insertUser(User user);
 
     int updateUser(@Param("id")String id,

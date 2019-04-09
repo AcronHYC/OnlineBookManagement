@@ -113,4 +113,16 @@ public class AdminServiceImpl implements AdminService {
         }
         return flag;
     }
+
+    @Override
+    public boolean deleteAdmin(String uuid){
+        boolean flag=false;
+        try {
+            adminDao.deleteAdmin(uuid);
+            flag=true;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return flag;
+    }
 }

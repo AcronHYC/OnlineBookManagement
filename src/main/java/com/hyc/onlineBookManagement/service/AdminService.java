@@ -43,4 +43,6 @@ public interface AdminService {
                         String role,
                         String roleName);
 
+    boolean deleteAdmin(String uuid);
+
 }

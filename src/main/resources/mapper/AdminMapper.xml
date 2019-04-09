@@ -163,4 +163,10 @@
             </if>
         </trim>
     </update>
+
+    <delete id="deleteAdmin">
+        delete
+        from admin_info
+        where uuid=#{uuid}
+    </delete>
 </mapper>

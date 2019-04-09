@@ -53,4 +53,6 @@ public interface AdminDao {
                     @Param("email")String email,
                     @Param("role")String role,
                     @Param("roleName")String roleName);
+
+    int deleteAdmin(@Param("uuid")String uuid);
 }

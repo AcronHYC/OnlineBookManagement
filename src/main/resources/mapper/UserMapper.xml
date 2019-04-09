@@ -43,6 +43,63 @@
       </where>
     </select>
 
+    <select id="selectUserCount" resultType="java.lang.Integer">
+        select COUNT(*)
+        from user_info u
+        <where>
+            <if test="id != null and id != ''">
+                u.id like "%"#{id}
+            </if>
+            <if test="userName != null and userName != ''">
+                and u.userName like "%"#{userName}"%"
+            </if>
+            <if test="realName != null and realName != ''">
+                and u.realName like "%"#{realName}"%"
+            </if>
+            <if test="password != null and password != ''">
+                and u.password like "%"#{password}"%"
+            </if>
+            <if test="IDcard != null and IDcard != ''">
+                and u.IDcard like "%"#{IDcard}"%"
+            </if>
+            <if test="telephone != null and telephone != ''">
+                and u.telephone like "%"#{telephone}"%"
+            </if>
+            <if test="email != null and email != ''">
+                and u.email like "%"#{email}"%"
+            </if>
+        </where>
+    </select>
+
+    <select id="selectUserByFuzzyAndPage" resultType="com.hyc.onlineBookManagement.bean.User">
+        select *
+        from user_info u
+        <where>
+            <if test="id != null and id != ''">
+                u.id like "%"#{id}
+            </if>
+            <if test="userName != null and userName != ''">
+                and u.userName like "%"#{userName}"%"
+            </if>
+            <if test="realName != null and realName != ''">
+                and u.realName like "%"#{realName}"%"
+            </if>
+            <if test="password != null and password != ''">
+                and u.password like "%"#{password}"%"
+            </if>
+            <if test="IDcard != null and IDcard != ''">
+                and u.IDcard like "%"#{IDcard}"%"
+            </if>
+            <if test="telephone != null and telephone != ''">
+                and u.telephone like "%"#{telephone}"%"
+            </if>
+            <if test="email != null and email != ''">
+                and u.email like "%"#{email}"%"
+            </if>
+        </where>
+        limit #{startIndex},#{pageSize}
+    </select>
+
     <insert id="insertUser" parameterType="com.hyc.onlineBookManagement.bean.User">
         insert into user_info(
         <include refid="userInfo_list"/>
