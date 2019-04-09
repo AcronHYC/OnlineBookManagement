@@ -39,16 +39,13 @@ public class AdminServiceImpl implements AdminService {
         if(page!=null){
             pageObject=new Page(page,pageSize,total);
             adminList=adminDao.selectAdminByPage(pageObject.getStartIndex(),pageSize);
-            jsonObject.put("jsonAdminList",JSONObject.toJSON(adminList));
-            jsonObject.put("pagination",JSONObject.toJSON(pageObject));
-            return jsonObject.toJSONString();
         }else{
             pageObject=new Page(1,10,total);
             adminList=adminDao.selectAdminByPage(pageObject.getStartIndex(),pageObject.getPageSize());
-            jsonObject.put("jsonAdminList",JSONObject.toJSON(adminList));
-            jsonObject.put("pagination",JSONObject.toJSON(pageObject));
-            return jsonObject.toJSONString();
         }
+        jsonObject.put("jsonAdminList",JSONObject.toJSON(adminList));
+        jsonObject.put("pagination",JSONObject.toJSON(pageObject));
+        return jsonObject.toJSONString();
     }
 
     @Override
@@ -70,16 +67,14 @@ public class AdminServiceImpl implements AdminService {
         if(page!=null){
             pageObject=new Page(page,pageSize,total);
             adminList=adminDao.seletAdminByFuzzyAndPage(uuid,adminName,password,realName,sex,telephone,email,role,roleName,pageObject.getStartIndex(),pageSize);
-            jsonObject.put("jsonAdminList",JSONObject.toJSON(adminList));
-            jsonObject.put("pagination",JSONObject.toJSON(pageObject));
-            return jsonObject.toJSONString();
         }else{
             pageObject=new Page(1,10,total);
             adminList=adminDao.seletAdminByFuzzyAndPage(uuid,adminName,password,realName,sex,telephone,email,role,roleName,pageObject.getStartIndex(),pageObject.getPageSize());
-            jsonObject.put("jsonAdminList",JSONObject.toJSON(adminList));
-            jsonObject.put("pagination",JSONObject.toJSON(pageObject));
-            return jsonObject.toJSONString();
         }
+        jsonObject.put("jsonAdminList",JSONObject.toJSON(adminList));
+        jsonObject.put("pagination",JSONObject.toJSON(pageObject));
+        return jsonObject.toJSONString();
+
     }
 
     @Override

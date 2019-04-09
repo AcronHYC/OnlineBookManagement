@@ -56,7 +56,7 @@
         from admin_info a
         <where>
             <if test="uuid != null and uuid !=''">
-                a.uuid like  "%"#{uuid}"%"
+                a.uuid like "%"#{uuid}"%"
             </if>
             <if test="adminName != null and adminName !=''">
                 a.adminName like "%"#{adminName}"%"

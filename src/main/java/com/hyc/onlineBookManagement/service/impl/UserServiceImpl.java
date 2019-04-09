@@ -38,19 +38,19 @@ public class UserServiceImpl implements UserService {
                                           Integer pageSize,
                                           Integer page){
         int total=userDao.selectUserCount(id,userName,realName,password,IDcard,telephone,email);
-        List<User> adminList=new ArrayList<User>();
+        List<User> userList=new ArrayList<User>();
         JSONObject jsonObject=new JSONObject();
         Page pageObject=null;
         if(page!=null){
             pageObject=new Page(page,pageSize,total);
-            adminList=userDao.selectUserByFuzzyAndPage(id,userName,realName,password,IDcard,telephone,email,pageObject.getStartIndex(),pageSize);
-            jsonObject.put("jsonUserList",JSONObject.toJSON(adminList));
+            userList=userDao.selectUserByFuzzyAndPage(id,userName,realName,password,IDcard,telephone,email,pageObject.getStartIndex(),pageSize);
+            jsonObject.put("jsonUserList",JSONObject.toJSON(userList));
             jsonObject.put("pagination",JSONObject.toJSON(pageObject));
             return jsonObject.toJSONString();
         }else{
             pageObject=new Page(1,10,total);
-            adminList=userDao.selectUserByFuzzyAndPage(id,userName,realName,password,IDcard,telephone,email,pageObject.getStartIndex(),pageObject.getPageSize());
-            jsonObject.put("jsonUserList",JSONObject.toJSON(adminList));
+            userList=userDao.selectUserByFuzzyAndPage(id,userName,realName,password,IDcard,telephone,email,pageObject.getStartIndex(),pageObject.getPageSize());
+            jsonObject.put("jsonUserList",JSONObject.toJSON(userList));
             jsonObject.put("pagination",JSONObject.toJSON(pageObject));
             return jsonObject.toJSONString();
         }

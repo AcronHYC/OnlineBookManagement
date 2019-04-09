@@ -4,12 +4,15 @@ import com.hyc.onlineBookManagement.bean.User;
 import com.hyc.onlineBookManagement.service.UserService;
 import com.hyc.onlineBookManagement.utils.UUIDUtils;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping(value = "/user")
@@ -32,16 +35,17 @@ public class UserController {
     }
 
     @ResponseBody
-    @RequestMapping("/addUser")
-    public boolean addUser(HttpServletRequest request){
+    @RequestMapping(value="/addUser", method = RequestMethod.POST)
+    public boolean addUser(@RequestBody Map<String,String> params){
         User user=new User();
+        System.out.println(params.get("userName"));
         user.setId(UUIDUtils.getUUID());
-        user.setUserName(request.getParameter("userName"));
-        user.setRealName(request.getParameter("realName"));
-        user.setPassword(request.getParameter("password"));
-        user.setIDcard(request.getParameter("IDcard"));
-        user.setTelephone(request.getParameter("telephone"));
-        user.setEmail(request.getParameter("email"));
+        user.setUserName(params.get("userName"));
+        user.setRealName(params.get("realName"));
+        user.setPassword(params.get("password"));
+        user.setIDcard(params.get("IDcard"));
+        user.setTelephone(params.get("telephone"));
+        user.setEmail(params.get("email"));
         return userService.addUser(user);
     }
 

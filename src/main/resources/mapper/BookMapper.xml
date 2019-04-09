@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hyc.onlineBookManagement.dao.BookDao">
+    <resultMap id="bookInfoMap" type="com.hyc.onlineBookManagement.bean.Book">
+        <id column="uuid" property="uuid"/>
+        <result column="img" property="img"/>
+        <result column="bookName" property="bookName"/>
+        <result column="author" property="author"/>
+        <result column="publish" property="publish"/>
+        <result column="ISBN" property="ISBN"/>
+        <result column="price" property="price"/>
+        <result column="class_uuid" property="class_uuid"/>
+        <result column="inNum" property="inNum"/>
+        <result column="outNum" property="outNum"/>
+        <result column="introduction" property="introduction"/>
+    </resultMap>
+
+    <sql id="bookInfo_list">
+        uuid,img,bookName,author,publish,ISBN,price,class_uuid,inNum,outNum,introduction
+    </sql>
+
+    <insert id="insertBook" parameterType="com.hyc.onlineBookManagement.bean.Book">
+        insert into
+        book_info(
+        <include refid="bookInfo_list"/>
+        )
+        values (#{uuid},#{img},#{bookName},#{author},#{publish},#{ISBN},#{price},#{class_uuid},#{inNum},#{outNum},#{introduction})
+    </insert>
+
+    <delete id="deleteBook">
+        delete
+        from book_info
+        where uuid=#{uuid}
+    </delete>
+
+    <update id="updateBook">
+        update book_info b
+        <trim prefix="set" suffixOverrides="," suffix="where uuid =#{uuid}">
+            <if test="img != null and img !=''">
+                b.img=#{img},
+            </if>
+            <if test="bookName != null and bookName !=''">
+                b.bookName=#{bookName},
+            </if>
+            <if test="author != null and author !=''">
+                b.author=#{author},
+            </if>
+            <if test="publish != null and publish !=''">
+                b.publish=#{publish},
+            </if>
+            <if test="ISBN != null and ISBN !=''">
+                b.ISBN=#{ISBN},
+            </if>
+            <if test="price != null and price !=''">
+                b.price=#{price},
+            </if>
+            <if test="class_uuid != null and class_uuid !=''">
+                b.class_uuid=#{class_uuid},
+            </if>
+            <if test="inNum != null and inNum !=''">
+                b.inNum=#{inNum},
+            </if>
+            <if test="outNum != null and outNum !=''">
+                b.outNum=#{outNum},
+            </if>
+            <if test="introduction != null and introduction !=''">
+                b.introduction=#{introduction}
+            </if>
+        </trim>
+    </update>
+
+    <select id="selectBookByParams" resultType="com.hyc.onlineBookManagement.bean.Book">
+        select *
+        from book_info b
+        <where>
+            <if test="uuid != null and uuid !=''">
+                b.uuid=#{uuid}
+            </if>
+            <if test="img != null and img !=''">
+                b.img=#{img}
+            </if>
+            <if test="bookName != null and bookName !=''">
+                b.bookName=#{bookName}
+            </if>
+            <if test="author != null and author !=''">
+                b.author=#{author}
+            </if>
+            <if test="publish != null and publish !=''">
+                b.publish=#{publish}
+            </if>
+            <if test="ISBN != null and ISBN !=''">
+                b.ISBN=#{ISBN}
+            </if>
+            <if test="price != null and price !=''">
+                b.price=#{price}
+            </if>
+            <if test="class_uuid != null and class_uuid !=''">
+                b.class_uuid=#{class_uuid}
+            </if>
+            <if test="inNum != null and inNum !=''">
+                b.inNum=#{inNum}
+            </if>
+            <if test="outNum != null and outNum !=''">
+                b.outNum=#{outNum}
+            </if>
+            <if test="introduction != null and introduction !=''">
+                b.introduction=#{introduction}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectBookCount" resultType="java.lang.Integer">
+        select COUNT(*)
+        from book_info b
+        <where>
+            <if test="uuid != null and uuid !=''">
+                b.uuid like "%"#{uuid}"%"
+            </if>
+            <if test="img != null and img !=''">
+                b.img like "%"#{img}"%"
+            </if>
+            <if test="bookName != null and bookName !=''">
+                b.bookName like "%"#{bookName}"%"
+            </if>
+            <if test="author != null and author !=''">
+                b.author like "%"#{author}"%"
+            </if>
+            <if test="publish != null and publish !=''">
+                b.publish like "%"#{publish}"%"
+            </if>
+            <if test="ISBN != null and ISBN !=''">
+                b.ISBN like "%"#{ISBN}"%"
+            </if>
+            <if test="price != null and price !=''">
+                b.price like "%"#{price}"%"
+            </if>
+            <if test="class_uuid != null and class_uuid !=''">
+                b.class_uuid like "%"#{class_uuid}"%"
+            </if>
+            <if test="inNum != null and inNum !=''">
+                b.inNum like "%"#{inNum}"%"
+            </if>
+            <if test="outNum != null and outNum !=''">
+                b.outNum like "%"#{outNum}"%"
+            </if>
+            <if test="introduction != null and introduction !=''">
+                b.introduction like "%"#{introduction}"%"
+            </if>
+        </where>
+    </select>
+
+    <select id="selectBookByFuzzyAndPage" resultType="com.hyc.onlineBookManagement.bean.Book">
+        select *
+        from book_info b
+        <where>
+            <if test="uuid != null and uuid !=''">
+                b.uuid like "%"#{uuid}"%"
+            </if>
+            <if test="img != null and img !=''">
+                b.img like "%"#{img}"%"
+            </if>
+            <if test="bookName != null and bookName !=''">
+                b.bookName like "%"#{bookName}"%"
+            </if>
+            <if test="author != null and author !=''">
+                b.author like "%"#{author}"%"
+            </if>
+            <if test="publish != null and publish !=''">
+                b.publish like "%"#{publish}"%"
+            </if>
+            <if test="ISBN != null and ISBN !=''">
+                b.ISBN like "%"#{ISBN}"%"
+            </if>
+            <if test="price != null and price !=''">
+                b.price like "%"#{price}"%"
+            </if>
+            <if test="class_uuid != null and class_uuid !=''">
+                b.class_uuid like "%"#{class_uuid}"%"
+            </if>
+            <if test="inNum != null and inNum !=''">
+                b.inNum like "%"#{inNum}"%"
+            </if>
+            <if test="outNum != null and outNum !=''">
+                b.outNum like "%"#{outNum}"%"
+            </if>
+            <if test="introduction != null and introduction !=''">
+                b.introduction like "%"#{introduction}"%"
+            </if>
+        </where>
+        limit #{startIndex},#{pageSize}
+    </select>
+</mapper>

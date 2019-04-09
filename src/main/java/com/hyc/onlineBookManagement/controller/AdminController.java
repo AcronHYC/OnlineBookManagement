@@ -72,7 +72,7 @@ public class AdminController {
 
     @ResponseBody
     @RequestMapping(value="/addAdmin", method = RequestMethod.POST)
-    public boolean addUser(@RequestBody Map<String,String> params) {
+    public boolean addAdmin(@RequestBody Map<String,String> params) {
         Admin admin = new Admin();
         admin.setUuid(UUIDUtils.getUUID());
         admin.setAdminName(params.get("adminName"));
