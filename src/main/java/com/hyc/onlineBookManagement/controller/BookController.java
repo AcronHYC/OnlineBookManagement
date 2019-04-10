@@ -1,6 +1,7 @@
 package com.hyc.onlineBookManagement.controller;
 
 import com.hyc.onlineBookManagement.bean.Book;
+import com.hyc.onlineBookManagement.bean.BookClass;
 import com.hyc.onlineBookManagement.service.BookService;
 import com.hyc.onlineBookManagement.utils.UUIDUtils;
 import org.springframework.stereotype.Controller;
@@ -31,9 +32,10 @@ public class BookController {
             book.setBookName(params.get("bookName"));
             book.setAuthor(params.get("author"));
             book.setPublish(params.get("publish"));
-            book.setISBN(params.get("ISBN"));
+            book.setIsbn(params.get("isbn"));
             book.setPrice(params.get("price"));
             book.setClass_uuid(params.get("class_uuid"));
+            book.setState(params.get("state"));
             book.setInNum(params.get("inNum"));
             book.setOutNum(params.get("outNum"));
             book.setIntroduction(params.get("introduction"));
@@ -59,13 +61,14 @@ public class BookController {
         String bookName=params.get("bookName");
         String author=params.get("author");
         String publish=params.get("publish");
-        String ISBN=params.get("ISBN");
+        String isbn=params.get("isbn");
         String price=params.get("price");
         String class_uuid=params.get("class_uuid");
+        String state=params.get("state");
         String inNum=params.get("inNum");
         String outNum=params.get("outNum");
         String introduction=params.get("introduction");
-        return bookService.updateBook(uuid,img,bookName,author,publish,ISBN,price,class_uuid,inNum,outNum,introduction);
+        return bookService.updateBook(uuid,img,bookName,author,publish,isbn,price,class_uuid,state,inNum,outNum,introduction);
     }
 
     @ResponseBody
@@ -76,13 +79,14 @@ public class BookController {
         String bookName=request.getParameter("bookName");
         String author=request.getParameter("author");
         String publish=request.getParameter("publish");
-        String ISBN=request.getParameter("ISBN");
+        String isbn=request.getParameter("isbn");
         String price=request.getParameter("price");
         String class_uuid=request.getParameter("class_uuid");
+        String state=request.getParameter("state");
         String inNum=request.getParameter("inNum");
         String outNum=request.getParameter("outNum");
         String introduction=request.getParameter("introduction");
-        return bookService.queryBookByParams(uuid,img,bookName,author,publish,ISBN,price,class_uuid,inNum,outNum,introduction);
+        return bookService.queryBookByParams(uuid,img,bookName,author,publish,isbn,price,class_uuid,state,inNum,outNum,introduction);
     }
 
     @ResponseBody
@@ -93,18 +97,40 @@ public class BookController {
         String bookName=request.getParameter("bookName");
         String author=request.getParameter("author");
         String publish=request.getParameter("publish");
-        String ISBN=request.getParameter("ISBN");
+        String isbn=request.getParameter("isbn");
         String price=request.getParameter("price");
         String class_uuid=request.getParameter("class_uuid");
+        String state=request.getParameter("state");
         String inNum=request.getParameter("inNum");
         String outNum=request.getParameter("outNum");
         String introduction=request.getParameter("introduction");
         try {
             int page = Integer.parseInt(request.getParameter("page"));
             int pageSize = Integer.parseInt(request.getParameter("pageSize"));
-            return bookService.queryBookByFuzzyAndPage(uuid,img,bookName,author,publish,ISBN,price,class_uuid,inNum,outNum,introduction, pageSize, page);
+            return bookService.queryBookByFuzzyAndPage(uuid,img,bookName,author,publish,isbn,price,class_uuid,state,inNum,outNum,introduction, pageSize, page);
         } catch (Exception e) {
-            return bookService.queryBookByFuzzyAndPage(uuid,img,bookName,author,publish,ISBN,price,class_uuid,inNum,outNum,introduction, null, null);
+            return bookService.queryBookByFuzzyAndPage(uuid,img,bookName,author,publish,isbn,price,class_uuid,state,inNum,outNum,introduction, null, null);
         }
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/queryBookClass")
+    public List<BookClass> queryBookClass(){
+        return bookService.queryBookClass();
+    }
+
+    @ResponseBody
+    @RequestMapping(value="/addBookClass", method = RequestMethod.POST)
+    public boolean addBookClass(@RequestBody Map<String,String> params) {
+        BookClass bookClass=new BookClass();
+        bookClass.setClass_uuid(UUIDUtils.getUUID());
+        bookClass.setClass_name(params.get("class_name"));
+        return bookService.addBookClass(bookClass);
+    }
+
+    @ResponseBody
+    @RequestMapping(value="/deleteBookClass", method = RequestMethod.POST)
+    public boolean deleteBookClass(@RequestBody Map<String,String> params) {
+        return bookService.deleteBookClass(params.get("class_uuid"));
     }
 }

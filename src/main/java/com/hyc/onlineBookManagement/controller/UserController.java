@@ -38,7 +38,6 @@ public class UserController {
     @RequestMapping(value="/addUser", method = RequestMethod.POST)
     public boolean addUser(@RequestBody Map<String,String> params){
         User user=new User();
-        System.out.println(params.get("userName"));
         user.setId(UUIDUtils.getUUID());
         user.setUserName(params.get("userName"));
         user.setRealName(params.get("realName"));

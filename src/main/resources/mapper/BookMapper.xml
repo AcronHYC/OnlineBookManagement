@@ -7,16 +7,17 @@
         <result column="bookName" property="bookName"/>
         <result column="author" property="author"/>
         <result column="publish" property="publish"/>
-        <result column="ISBN" property="ISBN"/>
+        <result column="isbn" property="isbn"/>
         <result column="price" property="price"/>
         <result column="class_uuid" property="class_uuid"/>
+        <result column="state" property="state"/>
         <result column="inNum" property="inNum"/>
         <result column="outNum" property="outNum"/>
         <result column="introduction" property="introduction"/>
     </resultMap>
 
     <sql id="bookInfo_list">
-        uuid,img,bookName,author,publish,ISBN,price,class_uuid,inNum,outNum,introduction
+        uuid,img,bookName,author,publish,isbn,price,class_uuid,state,inNum,outNum,introduction
     </sql>
 
     <insert id="insertBook" parameterType="com.hyc.onlineBookManagement.bean.Book">
@@ -24,7 +25,7 @@
         book_info(
         <include refid="bookInfo_list"/>
         )
-        values (#{uuid},#{img},#{bookName},#{author},#{publish},#{ISBN},#{price},#{class_uuid},#{inNum},#{outNum},#{introduction})
+        values (#{uuid},#{img},#{bookName},#{author},#{publish},#{isbn},#{price},#{class_uuid},#{state},#{inNum},#{outNum},#{introduction})
     </insert>
 
     <delete id="deleteBook">
@@ -48,14 +49,17 @@
             <if test="publish != null and publish !=''">
                 b.publish=#{publish},
             </if>
-            <if test="ISBN != null and ISBN !=''">
-                b.ISBN=#{ISBN},
+            <if test="isbn != null and isbn !=''">
+                b.isbn=#{isbn},
             </if>
             <if test="price != null and price !=''">
                 b.price=#{price},
             </if>
             <if test="class_uuid != null and class_uuid !=''">
                 b.class_uuid=#{class_uuid},
+            </if>
+            <if test="state != null and state !=''">
+                b.state=#{state},
             </if>
             <if test="inNum != null and inNum !=''">
                 b.inNum=#{inNum},
@@ -77,34 +81,37 @@
                 b.uuid=#{uuid}
             </if>
             <if test="img != null and img !=''">
-                b.img=#{img}
+                and b.img=#{img}
             </if>
             <if test="bookName != null and bookName !=''">
-                b.bookName=#{bookName}
+                and b.bookName=#{bookName}
             </if>
             <if test="author != null and author !=''">
-                b.author=#{author}
+                and b.author=#{author}
             </if>
             <if test="publish != null and publish !=''">
-                b.publish=#{publish}
+                and b.publish=#{publish}
             </if>
-            <if test="ISBN != null and ISBN !=''">
-                b.ISBN=#{ISBN}
+            <if test="isbn != null and isbn !=''">
+                and b.isbn=#{isbn}
             </if>
             <if test="price != null and price !=''">
-                b.price=#{price}
+                and b.price=#{price}
             </if>
             <if test="class_uuid != null and class_uuid !=''">
-                b.class_uuid=#{class_uuid}
+                and b.class_uuid=#{class_uuid}
+            </if>
+            <if test="state != null and state !=''">
+                and b.state=#{state}
             </if>
             <if test="inNum != null and inNum !=''">
-                b.inNum=#{inNum}
+                and b.inNum=#{inNum}
             </if>
             <if test="outNum != null and outNum !=''">
-                b.outNum=#{outNum}
+                and b.outNum=#{outNum}
             </if>
             <if test="introduction != null and introduction !=''">
-                b.introduction=#{introduction}
+                and b.introduction=#{introduction}
             </if>
         </where>
     </select>
@@ -117,34 +124,37 @@
                 b.uuid like "%"#{uuid}"%"
             </if>
             <if test="img != null and img !=''">
-                b.img like "%"#{img}"%"
+                and b.img like "%"#{img}"%"
             </if>
             <if test="bookName != null and bookName !=''">
-                b.bookName like "%"#{bookName}"%"
+                and b.bookName like "%"#{bookName}"%"
             </if>
             <if test="author != null and author !=''">
-                b.author like "%"#{author}"%"
+                and b.author like "%"#{author}"%"
             </if>
             <if test="publish != null and publish !=''">
-                b.publish like "%"#{publish}"%"
+                and b.publish like "%"#{publish}"%"
             </if>
-            <if test="ISBN != null and ISBN !=''">
-                b.ISBN like "%"#{ISBN}"%"
+            <if test="isbn != null and isbn !=''">
+                and b.isbn like "%"#{isbn}"%"
             </if>
             <if test="price != null and price !=''">
-                b.price like "%"#{price}"%"
+                and b.price like "%"#{price}"%"
             </if>
             <if test="class_uuid != null and class_uuid !=''">
-                b.class_uuid like "%"#{class_uuid}"%"
+                and b.class_uuid like "%"#{class_uuid}"%"
+            </if>
+            <if test="state != null and state !=''">
+                and b.state like "%"#{state}"%"
             </if>
             <if test="inNum != null and inNum !=''">
-                b.inNum like "%"#{inNum}"%"
+                and b.inNum like "%"#{inNum}"%"
             </if>
             <if test="outNum != null and outNum !=''">
-                b.outNum like "%"#{outNum}"%"
+                and b.outNum like "%"#{outNum}"%"
             </if>
             <if test="introduction != null and introduction !=''">
-                b.introduction like "%"#{introduction}"%"
+                and b.introduction like "%"#{introduction}"%"
             </if>
         </where>
     </select>
@@ -157,36 +167,58 @@
                 b.uuid like "%"#{uuid}"%"
             </if>
             <if test="img != null and img !=''">
-                b.img like "%"#{img}"%"
+                and b.img like "%"#{img}"%"
             </if>
             <if test="bookName != null and bookName !=''">
-                b.bookName like "%"#{bookName}"%"
+                and b.bookName like "%"#{bookName}"%"
             </if>
             <if test="author != null and author !=''">
-                b.author like "%"#{author}"%"
+                and b.author like "%"#{author}"%"
             </if>
             <if test="publish != null and publish !=''">
-                b.publish like "%"#{publish}"%"
+                and b.publish like "%"#{publish}"%"
             </if>
-            <if test="ISBN != null and ISBN !=''">
-                b.ISBN like "%"#{ISBN}"%"
+            <if test="isbn != null and isbn !=''">
+                and b.isbn like "%"#{isbn}"%"
             </if>
             <if test="price != null and price !=''">
-                b.price like "%"#{price}"%"
+                and b.price like "%"#{price}"%"
             </if>
             <if test="class_uuid != null and class_uuid !=''">
-                b.class_uuid like "%"#{class_uuid}"%"
+                and b.class_uuid like "%"#{class_uuid}"%"
+            </if>
+            <if test="state != null and state !=''">
+                and b.state like "%"#{state}"%"
             </if>
             <if test="inNum != null and inNum !=''">
-                b.inNum like "%"#{inNum}"%"
+                and b.inNum like "%"#{inNum}"%"
             </if>
             <if test="outNum != null and outNum !=''">
-                b.outNum like "%"#{outNum}"%"
+                and b.outNum like "%"#{outNum}"%"
             </if>
             <if test="introduction != null and introduction !=''">
-                b.introduction like "%"#{introduction}"%"
+                and b.introduction like "%"#{introduction}"%"
             </if>
         </where>
         limit #{startIndex},#{pageSize}
     </select>
+
+    <select id="selectBookClass" resultType="com.hyc.onlineBookManagement.bean.BookClass">
+        select *
+        from class_info
+    </select>
+
+    <insert id="insertBookClass" parameterType="com.hyc.onlineBookManagement.bean.BookClass">
+        insert into
+        class_info(
+        class_uuid,class_name
+        )
+        values (#{class_uuid},#{class_name})
+    </insert>
+
+    <delete id="deleteBookClass">
+        delete
+        from class_info
+        where class_uuid=#{class_uuid}
+    </delete>
 </mapper>

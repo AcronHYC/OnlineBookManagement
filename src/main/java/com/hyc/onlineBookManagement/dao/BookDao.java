@@ -1,6 +1,7 @@
 package com.hyc.onlineBookManagement.dao;
 
 import com.hyc.onlineBookManagement.bean.Book;
+import com.hyc.onlineBookManagement.bean.BookClass;
 import org.apache.ibatis.annotations.Param;
 
 import java.math.BigDecimal;
@@ -16,9 +17,10 @@ public interface BookDao {
                    @Param("bookName")String bookName,
                    @Param("author")String author,
                    @Param("publish")String publish,
-                   @Param("ISBN")String ISBN,
+                   @Param("isbn")String isbn,
                    @Param("price")String price,
                    @Param("class_uuid")String class_uuid,
+                   @Param("state")String state,
                    @Param("inNum")String inNum,
                    @Param("outNum")String outNum,
                    @Param("introduction")String introduction);
@@ -28,9 +30,10 @@ public interface BookDao {
                                    @Param("bookName")String bookName,
                                    @Param("author")String author,
                                    @Param("publish")String publish,
-                                   @Param("ISBN")String ISBN,
+                                   @Param("isbn")String isbn,
                                    @Param("price")String price,
                                    @Param("class_uuid")String class_uuid,
+                                  @Param("state")String state,
                                    @Param("inNum")String inNum,
                                    @Param("outNum")String outNum,
                                    @Param("introduction")String introduction);
@@ -40,9 +43,10 @@ public interface BookDao {
                                        @Param("bookName")String bookName,
                                        @Param("author")String author,
                                        @Param("publish")String publish,
-                                       @Param("ISBN")String ISBN,
+                                       @Param("isbn")String isbn,
                                        @Param("price")String price,
                                        @Param("class_uuid")String class_uuid,
+                                        @Param("state")String state,
                                        @Param("inNum")String inNum,
                                        @Param("outNum")String outNum,
                                        @Param("introduction")String introduction,
@@ -54,10 +58,17 @@ public interface BookDao {
                         @Param("bookName")String bookName,
                         @Param("author")String author,
                         @Param("publish")String publish,
-                        @Param("ISBN")String ISBN,
+                        @Param("isbn")String isbn,
                         @Param("price")String price,
                         @Param("class_uuid")String class_uuid,
+                        @Param("state")String state,
                         @Param("inNum")String inNum,
                         @Param("outNum")String outNum,
                         @Param("introduction")String introduction);
+
+    List<BookClass> selectBookClass();
+
+    int insertBookClass(BookClass bookClass);
+
+    int deleteBookClass(@Param("class_uuid")String class_uuid);
 }

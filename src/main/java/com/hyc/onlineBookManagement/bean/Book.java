@@ -8,9 +8,10 @@ public class Book {
     private String bookName;
     private String author;
     private String publish;
-    private String ISBN;
+    private String isbn;
     private String price;
     private String class_uuid;
+    private String state;
     private String inNum;
     private String outNum;
     private String introduction;
@@ -55,12 +56,12 @@ public class Book {
         this.publish = publish;
     }
 
-    public String getISBN() {
-        return ISBN;
+    public String getIsbn() {
+        return isbn;
     }
 
-    public void setISBN(String ISBN) {
-        this.ISBN = ISBN;
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
     }
 
     public String getPrice() {
@@ -77,6 +78,14 @@ public class Book {
 
     public void setClass_uuid(String class_uuid) {
         this.class_uuid = class_uuid;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
     }
 
     public String getInNum() {
