@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hyc.onlineBookManagement.dao.BorrowDao">
+    <resultMap id="borrowInfoMap" type="com.hyc.onlineBookManagement.bean.Borrow">
+        <id column="uuid" property="uuid"/>
+        <result column="status" property="status"/>
+        <result column="user_uuid" property="user_uuid"/>
+        <result column="book_uuid" property="book_uuid"/>
+        <result column="borrow_date" property="borrow_date"/>
+        <result column="back_date" property="back_date"/>
+        <result column="borrow_day" property="borrow_day"/>
+        <result column="overdue" property="overdue"/>
+        <association property="user" javaType="com.hyc.onlineBookManagement.bean.User">
+            <id column="id" property="id"/>
+            <result column="userName" property="userName"/>
+            <result column="realName" property="realName"/>
+            <result column="password" property="password"/>
+            <result column="IDcard" property="IDcard"/>
+            <result column="telephone" property="telephone"/>
+            <result column="email" property="email"/>
+        </association>
+        <association property="book" javaType="com.hyc.onlineBookManagement.bean.Book">
+            <result column="bookName" property="bookName"/>
+        </association>
+    </resultMap>
+    <sql id="borrowInfo_list">
+        uuid,status,user_uuid,book_uuid,borrow_date,back_date,borrow_day,overdue
+    </sql>
+
+    <insert id="insertBorrow" parameterType="com.hyc.onlineBookManagement.bean.Borrow">
+        insert into
+        borrow_info(
+        <include refid="borrowInfo_list"/>
+        )
+        values (#{uuid},#{status},#{user_uuid},#{book_uuid},#{borrow_date},#{back_date},#{borrow_day},#{overdue})
+    </insert>
+
+    <delete id="deleteBorrow">
+        delete
+        from borrow_info
+        where uuid=#{uuid}
+    </delete>
+
+    <update id="updateBorrow">
+        update borrow_info b
+        <trim prefix="set" suffixOverrides="," suffix="where uuid =#{uuid}">
+            <if test="status != null and status !=''">
+                b.status=#{status},
+            </if>
+            <if test="user_uuid != null and user_uuid !=''">
+                b.user_uuid=#{user_uuid},
+            </if>
+            <if test="book_uuid != null and book_uuid !=''">
+                b.book_uuid=#{book_uuid},
+            </if>
+            <if test="borrow_date != null and borrow_date !=''">
+                b.borrow_date=#{borrow_date},
+            </if>
+            <if test="back_date != null and back_date !=''">
+                b.back_date=#{back_date},
+            </if>
+            <if test="borrow_day != null and borrow_day !=''">
+                b.borrow_day=#{borrow_day},
+            </if>
+            <if test="overdue != null and overdue !=''">
+                b.overdue=#{overdue},
+            </if>
+        </trim>
+    </update>
+
+    <select id="selectBorrowByParams" resultMap="borrowInfoMap">
+        select *
+        from borrow_info b bw,book_info b,user_info u
+        <where>
+            bw.user_uuid=u.id and bw.book_uuid=b.uuid
+            <if test="uuid != null and uuid !=''">
+                and bw.uuid=#{uuid}
+            </if>
+            <if test="status != null and status !=''">
+                and bw.status=#{status}
+            </if>
+            <if test="userName != null and userName !=''">
+                and u.userName=#{userName}
+            </if>
+            <if test="bookName != null and bookName !=''">
+                and b.bookName=#{bookName}
+            </if>
+            <if test="borrow_date != null and borrow_date !=''">
+                and bw.borrow_date=#{borrow_date}
+            </if>
+            <if test="back_date != null and back_date !=''">
+                and bw.back_date=#{back_date}
+            </if>
+            <if test="borrow_day != null and borrow_day !=''">
+                and bw.borrow_day=#{borrow_day}
+            </if>
+            <if test="overdue != null and overdue !=''">
+                and bw.overdue=#{overdue}
+            </if>
+
+        </where>
+    </select>
+
+    <select id="selectBorrowCount" resultType="java.lang.Integer">
+        select COUNT(*)
+        from borrow_info bw,book_info b,user_info u
+        <where>
+            bw.user_uuid=u.id and bw.book_uuid=b.uuid
+            <if test="uuid != null and uuid !=''">
+                and bw.uuid like "%"#{uuid}"%"
+            </if>
+            <if test="status != null and status !=''">
+                and bw.status like "%"#{status}"%"
+            </if>
+            <if test="userName != null and userName !=''">
+                and u.userName like "%"#{userName}"%"
+            </if>
+            <if test="bookName != null and bookName !=''">
+                and b.bookName like "%"#{bookName}"%"
+            </if>
+            <if test="borrow_day != null and borrow_day !=''">
+                and bw.borrow_day like "%"#{borrow_day}"%"
+            </if>
+            <if test="overdue != null and overdue !=''">
+                and bw.overdue like "%"#{overdue}"%"
+            </if>
+            <if test="borrowStartTime != null and borrowStartTime !=''">
+                and bw.borrow_date &gt;=#{borrowStartTime}
+            </if>
+            <if test="borrowEndTime != null and borrowEndTime !=''">
+                and bw.borrow_date &lt;=#{borrowEndTime}
+            </if>
+            <if test="backStartTime != null and backStartTime !=''">
+                and bw.back_date &gt;=#{backStartTime}
+            </if>
+            <if test="backEndTime != null and backEndTime !=''">
+                and bw.back_date &lt;=#{backEndTime}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectBorrowByFuzzyAndPage" resultMap="borrowInfoMap">
+        select *
+        from borrow_info bw,book_info b,user_info u
+        <where>
+            bw.user_uuid=u.id and bw.book_uuid=b.uuid
+            <if test="uuid != null and uuid !=''">
+                and bw.uuid like "%"#{uuid}"%"
+            </if>
+            <if test="status != null and status !=''">
+                and bw.status like "%"#{status}"%"
+            </if>
+            <if test="userName != null and userName !=''">
+                and u.userName like "%"#{userName}"%"
+            </if>
+            <if test="bookName != null and bookName !=''">
+                and b.bookName like "%"#{bookName}"%"
+            </if>
+            <if test="borrow_day != null and borrow_day !=''">
+                and bw.borrow_day like "%"#{borrow_day}"%"
+            </if>
+            <if test="overdue != null and overdue !=''">
+                and bw.overdue like "%"#{overdue}"%"
+            </if>
+            <if test="borrowStartTime != null and borrowStartTime !=''">
+                and bw.borrow_date &gt;=#{borrowStartTime}
+            </if>
+            <if test="borrowEndTime != null and borrowEndTime !=''">
+                and bw.borrow_date &lt;=#{borrowEndTime}
+            </if>
+            <if test="backStartTime != null and backStartTime !=''">
+                and bw.back_date &gt;=#{backStartTime}
+            </if>
+            <if test="backEndTime != null and backEndTime !=''">
+                and bw.back_date &lt;=#{backEndTime}
+            </if>
+        </where>
+    </select>
+</mapper>

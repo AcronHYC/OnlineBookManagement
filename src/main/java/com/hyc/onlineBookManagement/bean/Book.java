@@ -1,6 +1,7 @@
 package com.hyc.onlineBookManagement.bean;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 public class Book {
     private String uuid;
@@ -111,4 +112,5 @@ public class Book {
     public void setIntroduction(String introduction) {
         this.introduction = introduction;
     }
+
 }
