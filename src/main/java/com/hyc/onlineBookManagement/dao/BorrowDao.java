@@ -8,7 +8,7 @@ import java.util.List;
 public interface BorrowDao {
     int selectBorrowCount(@Param("uuid")String uuid,
                           @Param("status")String status,
-                          @Param("userName")String userName,
+                          @Param("realName")String realName,
                           @Param("bookName")String bookName,
                           @Param("borrow_day")String borrow_day,
                           @Param("overdue")String overdue,
@@ -32,7 +32,7 @@ public interface BorrowDao {
 
     List<Borrow> selectBorrowByParams(@Param("uuid")String uuid,
                                       @Param("status")String status,
-                                      @Param("userName")String userName,
+                                      @Param("realName")String realName,
                                       @Param("bookName")String bookName,
                                       @Param("borrow_date")String borrow_date,
                                       @Param("back_date")String back_date,
@@ -41,12 +41,14 @@ public interface BorrowDao {
 
     List<Borrow> selectBorrowByFuzzyAndPage(@Param("uuid")String uuid,
                                             @Param("status")String status,
-                                            @Param("userName")String userName,
+                                            @Param("realName")String realName,
                                             @Param("bookName")String bookName,
                                             @Param("borrow_day")String borrow_day,
                                             @Param("overdue")String overdue,
                                             @Param("borrowStartTime")String borrowStartTime,
                                             @Param("borrowEndTime")String borrowEndTime,
                                             @Param("backStartTime")String backStartTime,
-                                            @Param("backEndTime")String backEndTime);
+                                            @Param("backEndTime")String backEndTime,
+                                            @Param("startIndex")Integer startIndex,
+                                            @Param("pageSize")Integer pageSize);
 }

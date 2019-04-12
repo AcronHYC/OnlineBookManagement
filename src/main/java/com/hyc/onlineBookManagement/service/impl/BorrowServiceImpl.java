@@ -1,24 +1,29 @@
 package com.hyc.onlineBookManagement.service.impl;
 
+import com.alibaba.fastjson.JSONObject;
 import com.hyc.onlineBookManagement.bean.Borrow;
+import com.hyc.onlineBookManagement.bean.Page;
 import com.hyc.onlineBookManagement.dao.BookDao;
 import com.hyc.onlineBookManagement.dao.BorrowDao;
 import com.hyc.onlineBookManagement.service.BorrowService;
+import jdk.nashorn.internal.scripts.JS;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service(value = "borrowService")
 public class BorrowServiceImpl implements BorrowService {
     @Resource
     private BorrowDao borrowDao;
+    @Resource
     private BookDao bookDao;
 
     @Override
     public int queryBorrowCount(String uuid,
                                 String status,
-                                String userName,
+                                String realName,
                                 String bookName,
                                 String borrow_day,
                                 String overdue,
@@ -26,7 +31,7 @@ public class BorrowServiceImpl implements BorrowService {
                                 String borrowEndTime,
                                 String backStartTime,
                                 String backEndTime){
-        return borrowDao.selectBorrowCount(uuid,status,userName,bookName,borrow_day,overdue,borrowStartTime,borrowEndTime,backStartTime,backEndTime);
+        return borrowDao.selectBorrowCount(uuid,status,realName,bookName,borrow_day,overdue,borrowStartTime,borrowEndTime,backStartTime,backEndTime);
     }
 
     @Override
@@ -52,5 +57,34 @@ public class BorrowServiceImpl implements BorrowService {
             e.printStackTrace();
         }
         return flag;
+    }
+
+    @Override
+    public String queryBorrowByFuzzyAndPage(String uuid,
+                                            String status,
+                                            String realName,
+                                            String bookName,
+                                            String borrow_day,
+                                            String overdue,
+                                            String borrowStartTime,
+                                            String borrowEndTime,
+                                            String backStartTime,
+                                            String backEndTime,
+                                            Integer pageSize,
+                                            Integer page){
+        int total=borrowDao.selectBorrowCount(uuid,status,realName,bookName,borrow_day,overdue,borrowStartTime,borrowEndTime,backStartTime,backEndTime);
+        List<Borrow> borrowList=new ArrayList<Borrow>();
+        JSONObject jsonObject=new JSONObject();
+        Page pageObject=null;
+        if(page!=null) {
+            pageObject = new Page(page, pageSize, total);
+            borrowList=borrowDao.selectBorrowByFuzzyAndPage(uuid,status,realName,bookName,borrow_day,overdue,borrowStartTime,borrowEndTime,backStartTime,backEndTime,pageObject.getStartIndex(),pageSize);
+        }else{
+            pageObject=new Page(1,10,total);
+            borrowList=borrowDao.selectBorrowByFuzzyAndPage(uuid,status,realName,bookName,borrow_day,overdue,borrowStartTime,borrowEndTime,backStartTime,backEndTime,pageObject.getStartIndex(),pageObject.getPageSize());
+        }
+        jsonObject.put("jsonBorrowList",JSONObject.toJSON(borrowList));
+        jsonObject.put("pagination",JSONObject.toJSON(pageObject));
+        return jsonObject.toJSONString();
     }
 }

@@ -79,8 +79,8 @@
             <if test="status != null and status !=''">
                 and bw.status=#{status}
             </if>
-            <if test="userName != null and userName !=''">
-                and u.userName=#{userName}
+            <if test="realName != null and realName !=''">
+                and u.realName=#{realName}
             </if>
             <if test="bookName != null and bookName !=''">
                 and b.bookName=#{bookName}
@@ -97,7 +97,6 @@
             <if test="overdue != null and overdue !=''">
                 and bw.overdue=#{overdue}
             </if>
-
         </where>
     </select>
 
@@ -112,8 +111,8 @@
             <if test="status != null and status !=''">
                 and bw.status like "%"#{status}"%"
             </if>
-            <if test="userName != null and userName !=''">
-                and u.userName like "%"#{userName}"%"
+            <if test="realName != null and realName !=''">
+                and u.realName like "%"#{realName}"%"
             </if>
             <if test="bookName != null and bookName !=''">
                 and b.bookName like "%"#{bookName}"%"
@@ -150,8 +149,8 @@
             <if test="status != null and status !=''">
                 and bw.status like "%"#{status}"%"
             </if>
-            <if test="userName != null and userName !=''">
-                and u.userName like "%"#{userName}"%"
+            <if test="realName != null and realName !=''">
+                and u.realName like "%"#{realName}"%"
             </if>
             <if test="bookName != null and bookName !=''">
                 and b.bookName like "%"#{bookName}"%"
@@ -175,5 +174,6 @@
                 and bw.back_date &lt;=#{backEndTime}
             </if>
         </where>
+        limit #{startIndex},#{pageSize}
     </select>
 </mapper>

@@ -26,7 +26,7 @@ public class BorrowController {
     public int queryBorrowCount(HttpServletRequest request){
         String uuid=request.getParameter("uuid");
         String status=request.getParameter("status");
-        String userName=request.getParameter("userName");
+        String realName=request.getParameter("realName");
         String bookName=request.getParameter("bookName");
         String borrow_day=request.getParameter("borrow_day");
         String overdue=request.getParameter("overdue");
@@ -34,7 +34,7 @@ public class BorrowController {
         String borrowEndTime=request.getParameter("borrowEndTime");
         String backStartTime=request.getParameter("backStartTime");
         String backEndTime=request.getParameter("backEndTime");
-        return borrowService.queryBorrowCount(uuid,status,userName,bookName,borrow_day,overdue,borrowStartTime,borrowEndTime,backStartTime,backEndTime);
+        return borrowService.queryBorrowCount(uuid,status,realName,bookName,borrow_day,overdue,borrowStartTime,borrowEndTime,backStartTime,backEndTime);
     }
 
     @ResponseBody
@@ -54,5 +54,27 @@ public class BorrowController {
         borrow.setBorrow_day(params.get("borrow_day"));
         borrow.setOverdue(null);
         return borrowService.addBorrow(borrow,book_uuid,inNum,outNum);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/queryBorrowByFuzzyAndPage")
+    public String queryBorrowByFuzzyAndPage(HttpServletRequest request){
+        String uuid=request.getParameter("uuid");
+        String status=request.getParameter("status");
+        String realName=request.getParameter("realName");
+        String bookName=request.getParameter("bookName");
+        String borrow_day=request.getParameter("borrow_day");
+        String overdue=request.getParameter("overdue");
+        String borrowStartTime=request.getParameter("borrowStartTime");
+        String borrowEndTime=request.getParameter("borrowEndTime");
+        String backStartTime=request.getParameter("backStartTime");
+        String backEndTime=request.getParameter("backEndTime");
+        try {
+            int page = Integer.parseInt(request.getParameter("page"));
+            int pageSize = Integer.parseInt(request.getParameter("pageSize"));
+            return borrowService.queryBorrowByFuzzyAndPage(uuid,status,realName,bookName,borrow_day,overdue,borrowStartTime,borrowEndTime,backStartTime,backEndTime,pageSize,page);
+        } catch (Exception e) {
+            return borrowService.queryBorrowByFuzzyAndPage(uuid,status,realName,bookName,borrow_day,overdue,borrowStartTime,borrowEndTime,backStartTime,backEndTime,null,null);
+        }
     }
 }
