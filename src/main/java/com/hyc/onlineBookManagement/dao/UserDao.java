@@ -8,6 +8,7 @@ import java.util.List;
 
 @Repository
 public interface UserDao {
+    //根据条件动态查询读者
     List<User> selectUserByParams(@Param("id")String id,
                                   @Param("userName")String userName,
                                   @Param("realName")String realName,
@@ -16,6 +17,7 @@ public interface UserDao {
                                   @Param("telephone")String telephone,
                                   @Param("email")String email);
 
+    //根据条件动态查询读者数量
     int selectUserCount(@Param("id")String id,
                         @Param("userName")String userName,
                         @Param("realName")String realName,
@@ -24,6 +26,7 @@ public interface UserDao {
                         @Param("telephone")String telephone,
                         @Param("email")String email);
 
+    //分页模糊查询读者信息
     List<User> selectUserByFuzzyAndPage(@Param("id")String id,
                                        @Param("userName")String userName,
                                        @Param("realName")String realName,
@@ -34,8 +37,10 @@ public interface UserDao {
                                        @Param("startIndex")Integer startIndex,
                                        @Param("pageSize")Integer pageSize);
 
+    //插入读者信息
     int insertUser(User user);
 
+    //更新读者信息
     int updateUser(@Param("id")String id,
                    @Param("userName")String userName,
                    @Param("realName")String realName,

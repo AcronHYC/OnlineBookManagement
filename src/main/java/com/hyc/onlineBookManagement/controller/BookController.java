@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import com.hyc.onlineBookManagement.annotation.LoginToken;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +23,7 @@ public class BookController {
     @Resource
     private BookService bookService;
 
+    @LoginToken
     @ResponseBody
     @RequestMapping(value="/addBook", method = RequestMethod.POST)
     public boolean addBook(@RequestBody Map<String,String> params){
@@ -46,6 +48,7 @@ public class BookController {
         }
     }
 
+    @LoginToken
     @ResponseBody
     @RequestMapping(value="/deleteBook")
     public boolean deleteBook(@RequestBody Map<String,String> params){
@@ -53,6 +56,7 @@ public class BookController {
         return bookService.deleteBook(uuid);
     }
 
+    @LoginToken
     @ResponseBody
     @RequestMapping(value = "/updateBook", method = RequestMethod.POST)
     public boolean updateBook(@RequestBody Map<String,String> params) {
@@ -71,6 +75,7 @@ public class BookController {
         return bookService.updateBook(uuid,img,bookName,author,publish,isbn,price,class_uuid,state,inNum,outNum,introduction);
     }
 
+    @LoginToken
     @ResponseBody
     @RequestMapping("/queryBookByParams")
     public List<Book> queryBookByParams(HttpServletRequest request){
@@ -89,6 +94,7 @@ public class BookController {
         return bookService.queryBookByParams(uuid,img,bookName,author,publish,isbn,price,class_uuid,state,inNum,outNum,introduction);
     }
 
+    @LoginToken
     @ResponseBody
     @RequestMapping(value = "/queryBookByFuzzyAndPage")
     public String queryBookByFuzzyAndPage(HttpServletRequest request) {
@@ -113,12 +119,14 @@ public class BookController {
         }
     }
 
+    @LoginToken
     @ResponseBody
     @RequestMapping(value = "/queryBookClass")
     public List<BookClass> queryBookClass(){
         return bookService.queryBookClass();
     }
 
+    @LoginToken
     @ResponseBody
     @RequestMapping(value="/addBookClass", method = RequestMethod.POST)
     public boolean addBookClass(@RequestBody Map<String,String> params) {
@@ -128,6 +136,7 @@ public class BookController {
         return bookService.addBookClass(bookClass);
     }
 
+    @LoginToken
     @ResponseBody
     @RequestMapping(value="/deleteBookClass", method = RequestMethod.POST)
     public boolean deleteBookClass(@RequestBody Map<String,String> params) {

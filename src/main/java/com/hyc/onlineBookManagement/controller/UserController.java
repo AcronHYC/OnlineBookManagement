@@ -1,5 +1,6 @@
 package com.hyc.onlineBookManagement.controller;
 
+import com.hyc.onlineBookManagement.annotation.LoginToken;
 import com.hyc.onlineBookManagement.bean.User;
 import com.hyc.onlineBookManagement.service.UserService;
 import com.hyc.onlineBookManagement.utils.UUIDUtils;
@@ -13,6 +14,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
+import com.hyc.onlineBookManagement.annotation.LoginToken;
 
 @Controller
 @RequestMapping(value = "/user")
@@ -20,7 +22,7 @@ public class UserController {
     @Resource
     private UserService userService;
 
-
+    @LoginToken
     @ResponseBody
     @RequestMapping("/queryUserByParams")
     public List<User> queryUserByParams(HttpServletRequest request){
@@ -34,6 +36,7 @@ public class UserController {
         return userService.queryUserByParams(id,userName,realName,password,IDcard,telephone,email);
     }
 
+    @LoginToken
     @ResponseBody
     @RequestMapping(value="/addUser", method = RequestMethod.POST)
     public boolean addUser(@RequestBody Map<String,String> params){
@@ -48,6 +51,7 @@ public class UserController {
         return userService.addUser(user);
     }
 
+    @LoginToken
     @ResponseBody
     @RequestMapping("/queryUserByFuzzyAndPage")
     public String queryUserByFuzzyAndPage(HttpServletRequest request) {
@@ -67,6 +71,7 @@ public class UserController {
         }
     }
 
+    @LoginToken
     @ResponseBody
     @RequestMapping("/updateUser")
     public boolean updateUser(HttpServletRequest request){

@@ -10,6 +10,7 @@ public class Borrow {
     private Date borrow_date;
     private Date back_date;
     private String borrow_day;
+    private String real_borrow_day;
     private String overdue;
     private User user;
     private Book book;
@@ -68,6 +69,14 @@ public class Borrow {
 
     public void setBorrow_day(String borrow_day) {
         this.borrow_day = borrow_day;
+    }
+
+    public String getReal_borrow_day() {
+        return real_borrow_day;
+    }
+
+    public void setReal_borrow_day(String real_borrow_day) {
+        this.real_borrow_day = real_borrow_day;
     }
 
     public String getOverdue() {

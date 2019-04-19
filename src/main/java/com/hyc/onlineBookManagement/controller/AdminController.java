@@ -1,18 +1,16 @@
 package com.hyc.onlineBookManagement.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.hyc.onlineBookManagement.annotation.LoginToken;
 import com.hyc.onlineBookManagement.bean.Admin;
 import com.hyc.onlineBookManagement.service.AdminService;
+import com.hyc.onlineBookManagement.service.TokenService;
 import com.hyc.onlineBookManagement.utils.UUIDUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.URLDecoder;
 import java.util.List;
 import java.util.Map;
 
@@ -21,7 +19,10 @@ import java.util.Map;
 public class AdminController {
     @Resource
     private AdminService adminService;
+    @Resource
+    private TokenService tokenService;
 
+    @LoginToken
     @ResponseBody
     @RequestMapping("/queryAdminByParams")
     public List<Admin> queryAdminByParams(HttpServletRequest request) {
@@ -37,6 +38,7 @@ public class AdminController {
         return adminService.queryAdminByParams(uuid, adminName, password, realName, sex, telephone, email, role, roleName);
     }
 
+    @LoginToken
     @ResponseBody
     @RequestMapping("/queryAdminByPage")
     public String queryAdminByPage(HttpServletRequest request) {
@@ -49,6 +51,7 @@ public class AdminController {
         }
     }
 
+    @LoginToken
     @ResponseBody
     @RequestMapping("/queryAdminByFuzzyAndPage")
     public String queryAdminByFuzzyAndPage(HttpServletRequest request) {
@@ -70,6 +73,7 @@ public class AdminController {
         }
     }
 
+    @LoginToken
     @ResponseBody
     @RequestMapping(value="/addAdmin", method = RequestMethod.POST)
     public boolean addAdmin(@RequestBody Map<String,String> params) {
@@ -93,6 +97,7 @@ public class AdminController {
         return adminService.addAdmin(admin);
     }
 
+    @LoginToken
     @ResponseBody
     @RequestMapping(value = "/updateAdmin", method = RequestMethod.POST)
     public boolean updateAdmin(@RequestBody Map<String,String> params) {
@@ -117,10 +122,29 @@ public class AdminController {
         return adminService.updateAdmin(uuid, adminName, password, realName, sex, telephone, email, role, roleName);
     }
 
+    @LoginToken
     @ResponseBody
     @RequestMapping(value="/deleteAdmin")
     public boolean deleteAdmin(@RequestBody Map<String,String> params){
         String uuid=params.get("uuid");
         return adminService.deleteAdmin(uuid);
+    }
+
+    @ResponseBody
+    @PostMapping("/login")
+    public String login(@RequestBody Map<String,String> params){
+        String adminName = params.get("adminName");
+        String password = params.get("password");
+        JSONObject jsonObject=new JSONObject();
+        try {
+            Admin admin=adminService.queryAdminByParams(null,adminName,password,null,null,null,null,null,null).get(0);
+            String token=tokenService.getToken(admin);
+            jsonObject.put("loginUser",JSONObject.toJSON(admin));
+            jsonObject.put("token",JSONObject.toJSON(token));
+            return jsonObject.toJSONString();
+        }catch (IndexOutOfBoundsException e){
+            jsonObject.put("error","用户名或密码错误!");
+            return jsonObject.toJSONString();
+        }
     }
 }
