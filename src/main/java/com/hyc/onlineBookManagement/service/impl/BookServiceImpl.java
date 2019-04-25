@@ -140,4 +140,15 @@ public class BookServiceImpl implements BookService {
         }
         return flag;
     }
+
+    @Override
+    public List<Book> queryBookClassCount(){
+        return bookDao.selectBookClassCount();
+    }
+
+    @Override
+    public List<Book> queryBookClassOutCount(){return bookDao.selectBookClassOutCount();}
+
+    @Override
+    public List<Book> queryBookCountLimitTen(){return bookDao.selectBookCountLimitTen();}
 }

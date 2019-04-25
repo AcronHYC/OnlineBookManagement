@@ -80,4 +80,12 @@ public interface BookDao {
 
     //删除图书类别
     int deleteBookClass(@Param("class_uuid")String class_uuid);
+
+    //查询各种图书类型的数量
+    List<Book> selectBookClassCount();
+
+    //查询各种图书类型的借出数量
+    List<Book> selectBookClassOutCount();
+
+    List<Book> selectBookCountLimitTen();
 }

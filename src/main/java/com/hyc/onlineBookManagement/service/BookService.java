@@ -65,4 +65,12 @@ public interface BookService {
 
     //删除图书类别
     boolean deleteBookClass(String class_uuid);
+
+    //查询各种图书类型的数量
+    List<Book> queryBookClassCount();
+
+    //查询各种图书类型的借出数量
+    List<Book> queryBookClassOutCount();
+
+    List<Book> queryBookCountLimitTen();
 }

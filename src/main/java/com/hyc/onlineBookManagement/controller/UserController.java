@@ -5,10 +5,7 @@ import com.hyc.onlineBookManagement.bean.User;
 import com.hyc.onlineBookManagement.service.UserService;
 import com.hyc.onlineBookManagement.utils.UUIDUtils;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -84,4 +81,11 @@ public class UserController {
         String email=request.getParameter("email");
         return userService.updateUser(id,userName,realName,password,IDcard,telephone,email);
     }
+
+    @ResponseBody
+    @GetMapping("/queryUserBorrowCount")
+    public List<User> queryUserBorrowCount() {
+        return userService.queryUserBorrowCount();
+    }
+
 }

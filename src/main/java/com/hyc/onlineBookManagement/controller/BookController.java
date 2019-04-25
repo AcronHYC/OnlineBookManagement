@@ -5,10 +5,7 @@ import com.hyc.onlineBookManagement.bean.BookClass;
 import com.hyc.onlineBookManagement.service.BookService;
 import com.hyc.onlineBookManagement.utils.UUIDUtils;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import com.hyc.onlineBookManagement.annotation.LoginToken;
 
 import javax.annotation.Resource;
@@ -142,4 +139,18 @@ public class BookController {
     public boolean deleteBookClass(@RequestBody Map<String,String> params) {
         return bookService.deleteBookClass(params.get("class_uuid"));
     }
+
+    @ResponseBody
+    @GetMapping(value="/queryBookClassCount")
+    public List<Book> queryBookClassCount(){
+        return bookService.queryBookClassCount();
+    }
+
+    @ResponseBody
+    @GetMapping(value="/queryBookClassOutCount")
+    public List<Book> queryBookClassOutCount(){return bookService.queryBookClassOutCount();}
+
+    @ResponseBody
+    @GetMapping(value="/queryBookCountLimitTen")
+    public List<Book> queryBookCountLimitTen(){return bookService.queryBookCountLimitTen();}
 }

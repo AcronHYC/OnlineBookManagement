@@ -130,4 +130,13 @@
           </if>
         </trim>
     </update>
+
+    <select id="selectUserBorrowCount" resultType="Map">
+        select COUNT(*) as value,u.realName as name
+        from user_info u,borrow_info bw
+        where u.id=bw.user_uuid and bw.`status`="未还"
+        GROUP BY bw.user_uuid
+        ORDER BY name DESC
+        limit 10
+    </select>
 </mapper>

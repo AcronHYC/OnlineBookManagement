@@ -48,4 +48,7 @@ public interface UserDao {
                    @Param("IDcard")String IDcard,
                    @Param("telephone")String telephone,
                    @Param("email")String email);
+
+    //查询借书最多的十位读者的借书数量
+    List<User> selectUserBorrowCount();
 }

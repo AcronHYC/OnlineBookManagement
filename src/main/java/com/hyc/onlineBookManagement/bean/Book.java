@@ -16,6 +16,7 @@ public class Book {
     private String inNum;
     private String outNum;
     private String introduction;
+    private BookClass bookClass;
 
     public String getUuid() {
         return uuid;
@@ -113,4 +114,11 @@ public class Book {
         this.introduction = introduction;
     }
 
+    public BookClass getBookClass() {
+        return bookClass;
+    }
+
+    public void setBookClass(BookClass bookClass) {
+        this.bookClass = bookClass;
+    }
 }

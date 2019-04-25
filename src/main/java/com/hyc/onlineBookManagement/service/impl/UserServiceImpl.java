@@ -85,4 +85,9 @@ public class UserServiceImpl implements UserService {
         }
         return flag;
     }
+
+    @Override
+    public List<User> queryUserBorrowCount(){
+        return userDao.selectUserBorrowCount();
+    }
 }

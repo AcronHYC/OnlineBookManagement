@@ -36,4 +36,7 @@ public interface UserService {
                        String IDcard,
                        String telephone,
                        String email);
+
+    //查询借书最多的十位读者的借书数量
+    List<User> queryUserBorrowCount();
 }

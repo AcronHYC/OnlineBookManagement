@@ -14,6 +14,10 @@
         <result column="inNum" property="inNum"/>
         <result column="outNum" property="outNum"/>
         <result column="introduction" property="introduction"/>
+        <association property="bookClass" javaType="com.hyc.onlineBookManagement.bean.BookClass">
+            <id column="class_uuid" property="class_uuid"/>
+            <result column="class_name" property="class_name"/>
+        </association>
     </resultMap>
 
     <sql id="bookInfo_list">
@@ -221,4 +225,27 @@
         from class_info
         where class_uuid=#{class_uuid}
     </delete>
+
+    <select id="selectBookClassCount" resultType="Map">
+      select c.class_name,COUNT(*) as num
+      from book_info b,class_info c
+      where b.class_uuid=c.class_uuid
+      group by b.class_uuid
+    </select>
+
+    <select id="selectBookClassOutCount" resultType="Map">
+        select c.class_name,SUM(outNum) as num
+        from book_info b,class_info c
+        where b.class_uuid=c.class_uuid
+        group by b.class_uuid
+		ORDER BY SUM(outNum) ASC
+    </select>
+
+    <select id="selectBookCountLimitTen" resultType="Map">
+        select bookName as name,SUM(outNum) as value
+        from book_info
+        GROUP BY bookName
+        ORDER BY SUM(outNum) DESC
+        limit 10
+    </select>
 </mapper>
