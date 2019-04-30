@@ -61,4 +61,28 @@ public interface BorrowDao {
                                             @Param("backEndTime")String backEndTime,
                                             @Param("startIndex")Integer startIndex,
                                             @Param("pageSize")Integer pageSize);
+
+    int selectBorrowCountByParams(@Param("user_uuid")String user_uuid,
+                                           @Param("status")String status,
+                                           @Param("bookName")String bookName,
+                                           @Param("borrow_day")String borrow_day,
+                                           @Param("real_borrow_day")String real_borrow_day,
+                                           @Param("overdue")String overdue,
+                                           @Param("borrowStartTime")String borrowStartTime,
+                                           @Param("borrowEndTime")String borrowEndTime,
+                                           @Param("backStartTime")String backStartTime,
+                                           @Param("backEndTime")String backEndTime);
+
+    List<Borrow> selectBorrowByFuzzyAndPageAndUserid(@Param("user_uuid")String user_uuid,
+                                                     @Param("status")String status,
+                                                     @Param("bookName")String bookName,
+                                                     @Param("borrow_day")String borrow_day,
+                                                     @Param("real_borrow_day")String real_borrow_day,
+                                                     @Param("overdue")String overdue,
+                                                     @Param("borrowStartTime")String borrowStartTime,
+                                                     @Param("borrowEndTime")String borrowEndTime,
+                                                     @Param("backStartTime")String backStartTime,
+                                                     @Param("backEndTime")String backEndTime,
+                                                     @Param("startIndex")Integer startIndex,
+                                                     @Param("pageSize")Integer pageSize);
 }

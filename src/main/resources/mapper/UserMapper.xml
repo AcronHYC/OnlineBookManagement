@@ -7,13 +7,13 @@
         <result column="userName" property="userrName"/>
         <result column="realName" property="realName"/>
         <result column="password" property="password"/>
-        <result column="IDcard" property="IDcard"/>
+        <result column="idcard" property="idcard"/>
         <result column="telephone" property="telephone"/>
         <result column="email" property="email"/>
     </resultMap>
 
     <sql id="userInfo_list">
-        id,userName,realName,password,IDcard,telephone,email
+        id,userName,realName,password,idcard,telephone,email
     </sql>
     <select id="selectUserByParams" resultType="com.hyc.onlineBookManagement.bean.User">
       select *
@@ -31,8 +31,8 @@
           <if test="password != null and password != ''">
             and u.password=#{password}
           </if>
-          <if test="IDcard != null and IDcard != ''">
-            and u.IDcard=#{IDcard}
+          <if test="idcard != null and idcard != ''">
+            and u.idcard=#{idcard}
           </if>
           <if test="telephone != null and telephone != ''">
             and u.telephone=#{telephone}
@@ -59,8 +59,8 @@
             <if test="password != null and password != ''">
                 and u.password like "%"#{password}"%"
             </if>
-            <if test="IDcard != null and IDcard != ''">
-                and u.IDcard like "%"#{IDcard}"%"
+            <if test="idcard != null and idcard != ''">
+                and u.idcard like "%"#{idcard}"%"
             </if>
             <if test="telephone != null and telephone != ''">
                 and u.telephone like "%"#{telephone}"%"
@@ -87,8 +87,8 @@
             <if test="password != null and password != ''">
                 and u.password like "%"#{password}"%"
             </if>
-            <if test="IDcard != null and IDcard != ''">
-                and u.IDcard like "%"#{IDcard}"%"
+            <if test="idcard != null and idcard != ''">
+                and u.idcard like "%"#{idcard}"%"
             </if>
             <if test="telephone != null and telephone != ''">
                 and u.telephone like "%"#{telephone}"%"
@@ -104,7 +104,7 @@
         insert into user_info(
         <include refid="userInfo_list"/>
         )
-        values (#{id},#{userName},#{realName},#{password},#{IDcard},#{telephone},#{email})
+        values (#{id},#{userName},#{realName},#{password},#{idcard},#{telephone},#{email})
     </insert>
 
     <update id="updateUser">
@@ -119,8 +119,8 @@
           <if test="password != null and password != ''">
               password=#{password},
           </if>
-          <if test="IDcard != null and IDcard != ''">
-              IDcard=#{IDcard},
+          <if test="idcard != null and idcard != ''">
+              idcard=#{idcard},
           </if>
           <if test="telephone != null and telephone != ''">
               telephone=#{telephone},

@@ -10,7 +10,7 @@ public interface UserService {
                                  String userName,
                                  String realName,
                                  String password,
-                                 String IDcard,
+                                 String idcard,
                                  String telephone,
                                  String email);
 
@@ -19,7 +19,7 @@ public interface UserService {
                                    String userName,
                                    String realName,
                                    String password,
-                                   String IDcard,
+                                   String idcard,
                                    String telephone,
                                    String email,
                                    Integer pageSize,
@@ -33,7 +33,7 @@ public interface UserService {
                        String userName,
                        String realName,
                        String password,
-                       String IDcard,
+                       String idcard,
                        String telephone,
                        String email);
 

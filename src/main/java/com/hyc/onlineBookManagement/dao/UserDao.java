@@ -13,7 +13,7 @@ public interface UserDao {
                                   @Param("userName")String userName,
                                   @Param("realName")String realName,
                                   @Param("password")String password,
-                                  @Param("IDcard")String IDcard,
+                                  @Param("idcard")String idcard,
                                   @Param("telephone")String telephone,
                                   @Param("email")String email);
 
@@ -22,7 +22,7 @@ public interface UserDao {
                         @Param("userName")String userName,
                         @Param("realName")String realName,
                         @Param("password")String password,
-                        @Param("IDcard")String IDcard,
+                        @Param("idcard")String idcard,
                         @Param("telephone")String telephone,
                         @Param("email")String email);
 
@@ -31,7 +31,7 @@ public interface UserDao {
                                        @Param("userName")String userName,
                                        @Param("realName")String realName,
                                        @Param("password")String password,
-                                       @Param("IDcard")String IDcard,
+                                       @Param("idcard")String idcard,
                                        @Param("telephone")String telephone,
                                        @Param("email")String email,
                                        @Param("startIndex")Integer startIndex,
@@ -45,7 +45,7 @@ public interface UserDao {
                    @Param("userName")String userName,
                    @Param("realName")String realName,
                    @Param("password")String password,
-                   @Param("IDcard")String IDcard,
+                   @Param("idcard")String idcard,
                    @Param("telephone")String telephone,
                    @Param("email")String email);
 

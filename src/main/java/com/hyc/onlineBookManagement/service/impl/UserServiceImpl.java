@@ -21,10 +21,10 @@ public class UserServiceImpl implements UserService {
                                         String userName,
                                         String realName,
                                         String password,
-                                        String IDcard,
+                                        String idcard,
                                         String telephone,
                                         String email){
-        return userDao.selectUserByParams(id,userName,realName,password,IDcard,telephone,email);
+        return userDao.selectUserByParams(id,userName,realName,password,idcard,telephone,email);
     }
 
     @Override
@@ -32,24 +32,24 @@ public class UserServiceImpl implements UserService {
                                           String userName,
                                           String realName,
                                           String password,
-                                          String IDcard,
+                                          String idcard,
                                           String telephone,
                                           String email,
                                           Integer pageSize,
                                           Integer page){
-        int total=userDao.selectUserCount(id,userName,realName,password,IDcard,telephone,email);
+        int total=userDao.selectUserCount(id,userName,realName,password,idcard,telephone,email);
         List<User> userList=new ArrayList<User>();
         JSONObject jsonObject=new JSONObject();
         Page pageObject=null;
         if(page!=null){
             pageObject=new Page(page,pageSize,total);
-            userList=userDao.selectUserByFuzzyAndPage(id,userName,realName,password,IDcard,telephone,email,pageObject.getStartIndex(),pageSize);
+            userList=userDao.selectUserByFuzzyAndPage(id,userName,realName,password,idcard,telephone,email,pageObject.getStartIndex(),pageSize);
             jsonObject.put("jsonUserList",JSONObject.toJSON(userList));
             jsonObject.put("pagination",JSONObject.toJSON(pageObject));
             return jsonObject.toJSONString();
         }else{
             pageObject=new Page(1,10,total);
-            userList=userDao.selectUserByFuzzyAndPage(id,userName,realName,password,IDcard,telephone,email,pageObject.getStartIndex(),pageObject.getPageSize());
+            userList=userDao.selectUserByFuzzyAndPage(id,userName,realName,password,idcard,telephone,email,pageObject.getStartIndex(),pageObject.getPageSize());
             jsonObject.put("jsonUserList",JSONObject.toJSON(userList));
             jsonObject.put("pagination",JSONObject.toJSON(pageObject));
             return jsonObject.toJSONString();
@@ -73,12 +73,12 @@ public class UserServiceImpl implements UserService {
                               String userName,
                               String realName,
                               String password,
-                              String IDcard,
+                              String idcard,
                               String telephone,
                               String email){
         boolean flag=false;
         try {
-            userDao.updateUser(id,userName,realName,password,IDcard,telephone,email);
+            userDao.updateUser(id,userName,realName,password,idcard,telephone,email);
             flag=true;
         }catch (Exception e){
             e.printStackTrace();

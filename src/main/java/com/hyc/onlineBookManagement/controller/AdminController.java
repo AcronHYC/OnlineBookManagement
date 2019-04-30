@@ -3,8 +3,10 @@ package com.hyc.onlineBookManagement.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.hyc.onlineBookManagement.annotation.LoginToken;
 import com.hyc.onlineBookManagement.bean.Admin;
+import com.hyc.onlineBookManagement.bean.User;
 import com.hyc.onlineBookManagement.service.AdminService;
 import com.hyc.onlineBookManagement.service.TokenService;
+import com.hyc.onlineBookManagement.service.UserService;
 import com.hyc.onlineBookManagement.utils.UUIDUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +23,8 @@ public class AdminController {
     private AdminService adminService;
     @Resource
     private TokenService tokenService;
+    @Resource
+    private UserService userService;
 
     @LoginToken
     @ResponseBody
@@ -134,14 +138,23 @@ public class AdminController {
     @PostMapping("/login")
     public String login(@RequestBody Map<String,String> params){
         String adminName = params.get("adminName");
+        String userName = params.get("userName");
         String password = params.get("password");
         JSONObject jsonObject=new JSONObject();
         try {
-            Admin admin=adminService.queryAdminByParams(null,adminName,password,null,null,null,null,null,null).get(0);
-            String token=tokenService.getToken(admin);
-            jsonObject.put("loginUser",JSONObject.toJSON(admin));
-            jsonObject.put("token",JSONObject.toJSON(token));
-            return jsonObject.toJSONString();
+            if(adminName!=null) {
+                Admin admin = adminService.queryAdminByParams(null, adminName, password, null, null, null, null, null, null).get(0);
+                String token = tokenService.getToken(admin);
+                jsonObject.put("loginUser", JSONObject.toJSON(admin));
+                jsonObject.put("token", JSONObject.toJSON(token));
+                return jsonObject.toJSONString();
+            }else{
+                User user=userService.queryUserByParams(null,userName,null,password,null,null,null).get(0);
+                String token = tokenService.getUserToken(user);
+                jsonObject.put("loginUser", JSONObject.toJSON(user));
+                jsonObject.put("token", JSONObject.toJSON(token));
+                return jsonObject.toJSONString();
+            }
         }catch (IndexOutOfBoundsException e){
             jsonObject.put("error","用户名或密码错误!");
             return jsonObject.toJSONString();

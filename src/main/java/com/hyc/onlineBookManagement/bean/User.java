@@ -8,7 +8,7 @@ public class User {
     private String userName;
     private String realName;
     private String password;
-    private String IDcard;
+    private String idcard;
     private String telephone;
     private String email;
 
@@ -44,12 +44,12 @@ public class User {
         this.password = password;
     }
 
-    public String getIDcard() {
-        return IDcard;
+    public String getIdcard() {
+        return idcard;
     }
 
-    public void setIDcard(String IDcard) {
-        this.IDcard = IDcard;
+    public void setIdcard(String idcard) {
+        this.idcard = idcard;
     }
 
     public String getTelephone() {

@@ -27,10 +27,10 @@ public class UserController {
         String userName=request.getParameter("userName");
         String realName=request.getParameter("realName");
         String password=request.getParameter("password");
-        String IDcard=request.getParameter("IDcard");
+        String idcard=request.getParameter("idcard");
         String telephone=request.getParameter("telephone");
         String email=request.getParameter("email");
-        return userService.queryUserByParams(id,userName,realName,password,IDcard,telephone,email);
+        return userService.queryUserByParams(id,userName,realName,password,idcard,telephone,email);
     }
 
     @LoginToken
@@ -42,7 +42,7 @@ public class UserController {
         user.setUserName(params.get("userName"));
         user.setRealName(params.get("realName"));
         user.setPassword(params.get("password"));
-        user.setIDcard(params.get("IDcard"));
+        user.setIdcard(params.get("idcard"));
         user.setTelephone(params.get("telephone"));
         user.setEmail(params.get("email"));
         return userService.addUser(user);
@@ -56,30 +56,30 @@ public class UserController {
         String userName=request.getParameter("userName");
         String realName=request.getParameter("realName");
         String password=request.getParameter("password");
-        String IDcard=request.getParameter("IDcard");
+        String idcard=request.getParameter("idcard");
         String telephone=request.getParameter("telephone");
         String email=request.getParameter("email");
         try {
             int page = Integer.parseInt(request.getParameter("page"));
             int pageSize = Integer.parseInt(request.getParameter("pageSize"));
-            return userService.queryUserByFuzzyAndPage(id,userName,realName,password,IDcard,telephone,email,pageSize,page);
+            return userService.queryUserByFuzzyAndPage(id,userName,realName,password,idcard,telephone,email,pageSize,page);
         }catch (Exception e){
-            return userService.queryUserByFuzzyAndPage(id,userName,realName,password,IDcard,telephone,email,null,null);
+            return userService.queryUserByFuzzyAndPage(id,userName,realName,password,idcard,telephone,email,null,null);
         }
     }
 
     @LoginToken
     @ResponseBody
-    @RequestMapping("/updateUser")
-    public boolean updateUser(HttpServletRequest request){
-        String id=request.getParameter("id");
-        String userName=request.getParameter("userName");
-        String realName=request.getParameter("realName");
-        String password=request.getParameter("password");
-        String IDcard=request.getParameter("IDcard");
-        String telephone=request.getParameter("telephone");
-        String email=request.getParameter("email");
-        return userService.updateUser(id,userName,realName,password,IDcard,telephone,email);
+    @PostMapping("/updateUser")
+    public boolean updateUser(@RequestBody Map<String,String> params){
+        String id=params.get("id");
+        String userName=params.get("userName");
+        String realName=params.get("realName");
+        String password=params.get("password");
+        String idcard=params.get("idcard");
+        String telephone=params.get("telephone");
+        String email=params.get("email");
+        return userService.updateUser(id,userName,realName,password,idcard,telephone,email);
     }
 
     @ResponseBody

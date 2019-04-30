@@ -49,4 +49,17 @@ public interface BorrowService {
                                      String backEndTime,
                                      Integer pageSize,
                                      Integer page);
+
+    String queryBorrowByFuzzyAndPageAndUserid(String user_uuid,
+                                              String status,
+                                              String bookName,
+                                              String borrow_day,
+                                              String real_borrow_day,
+                                              String overdue,
+                                              String borrowStartTime,
+                                              String borrowEndTime,
+                                              String backStartTime,
+                                              String backEndTime,
+                                              Integer pageSize,
+                                              Integer page);
 }

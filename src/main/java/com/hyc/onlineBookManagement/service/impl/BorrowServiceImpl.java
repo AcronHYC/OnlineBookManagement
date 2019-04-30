@@ -115,4 +115,33 @@ public class BorrowServiceImpl implements BorrowService {
         jsonObject.put("pagination",JSONObject.toJSON(pageObject));
         return jsonObject.toJSONString();
     }
+
+    @Override
+    public String queryBorrowByFuzzyAndPageAndUserid(String user_uuid,
+                                                     String status,
+                                                     String bookName,
+                                                     String borrow_day,
+                                                     String real_borrow_day,
+                                                     String overdue,
+                                                     String borrowStartTime,
+                                                     String borrowEndTime,
+                                                     String backStartTime,
+                                                     String backEndTime,
+                                                     Integer pageSize,
+                                                     Integer page){
+        int total=borrowDao.selectBorrowCountByParams(user_uuid,status,bookName,borrow_day,real_borrow_day,overdue,borrowStartTime,borrowEndTime,backStartTime,backEndTime);
+        List<Borrow> borrowList=new ArrayList<Borrow>();
+        JSONObject jsonObject=new JSONObject();
+        Page pageObject=null;
+        if(page!=null) {
+            pageObject = new Page(page, pageSize, total);
+            borrowList=borrowDao.selectBorrowByFuzzyAndPageAndUserid(user_uuid,status,bookName,borrow_day,real_borrow_day,overdue,borrowStartTime,borrowEndTime,backStartTime,backEndTime,pageObject.getStartIndex(),pageSize);
+        }else{
+            pageObject=new Page(1,10,total);
+            borrowList=borrowDao.selectBorrowByFuzzyAndPageAndUserid(user_uuid,status,bookName,borrow_day,real_borrow_day,overdue,borrowStartTime,borrowEndTime,backStartTime,backEndTime,pageObject.getStartIndex(),pageObject.getPageSize());
+        }
+        jsonObject.put("jsonBorrowList",JSONObject.toJSON(borrowList));
+        jsonObject.put("pagination",JSONObject.toJSON(pageObject));
+        return jsonObject.toJSONString();
+    }
 }

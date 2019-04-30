@@ -16,7 +16,7 @@
             <result column="userName" property="userName"/>
             <result column="realName" property="realName"/>
             <result column="password" property="password"/>
-            <result column="IDcard" property="IDcard"/>
+            <result column="idcard" property="idcard"/>
             <result column="telephone" property="telephone"/>
             <result column="email" property="email"/>
         </association>
@@ -161,6 +161,77 @@
             </if>
             <if test="realName != null and realName !=''">
                 and u.realName like "%"#{realName}"%"
+            </if>
+            <if test="bookName != null and bookName !=''">
+                and b.bookName like "%"#{bookName}"%"
+            </if>
+            <if test="borrow_day != null and borrow_day !=''">
+                and bw.borrow_day like "%"#{borrow_day}"%"
+            </if>
+            <if test="real_borrow_day != null and real_borrow_day !=''">
+                and bw.real_borrow_day like "%"#{real_borrow_day}"%"
+            </if>
+            <if test="overdue != null and overdue !=''">
+                and bw.overdue like "%"#{overdue}"%"
+            </if>
+            <if test="borrowStartTime != null and borrowStartTime !=''">
+                and bw.borrow_date &gt;=#{borrowStartTime}
+            </if>
+            <if test="borrowEndTime != null and borrowEndTime !=''">
+                and bw.borrow_date &lt;=#{borrowEndTime}
+            </if>
+            <if test="backStartTime != null and backStartTime !=''">
+                and bw.back_date &gt;=#{backStartTime}
+            </if>
+            <if test="backEndTime != null and backEndTime !=''">
+                and bw.back_date &lt;=#{backEndTime}
+            </if>
+        </where>
+        limit #{startIndex},#{pageSize}
+    </select>
+
+    <select id="selectBorrowCountByParams" resultType="java.lang.Integer">
+        select COUNT(*)
+        from borrow_info bw,book_info b,user_info u
+        <where>
+            bw.user_uuid=u.id and bw.book_uuid=b.uuid and bw.user_uuid=#{user_uuid}
+            <if test="status != null and status !=''">
+                and bw.status like "%"#{status}"%"
+            </if>
+            <if test="bookName != null and bookName !=''">
+                and b.bookName like "%"#{bookName}"%"
+            </if>
+            <if test="borrow_day != null and borrow_day !=''">
+                and bw.borrow_day like "%"#{borrow_day}"%"
+            </if>
+            <if test="real_borrow_day != null and real_borrow_day !=''">
+                and bw.real_borrow_day like "%"#{real_borrow_day}"%"
+            </if>
+            <if test="overdue != null and overdue !=''">
+                and bw.overdue like "%"#{overdue}"%"
+            </if>
+            <if test="borrowStartTime != null and borrowStartTime !=''">
+                and bw.borrow_date &gt;=#{borrowStartTime}
+            </if>
+            <if test="borrowEndTime != null and borrowEndTime !=''">
+                and bw.borrow_date &lt;=#{borrowEndTime}
+            </if>
+            <if test="backStartTime != null and backStartTime !=''">
+                and bw.back_date &gt;=#{backStartTime}
+            </if>
+            <if test="backEndTime != null and backEndTime !=''">
+                and bw.back_date &lt;=#{backEndTime}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectBorrowByFuzzyAndPageAndUserid" resultMap="borrowInfoMap">
+        select *
+        from borrow_info bw,book_info b,user_info u
+        <where>
+            bw.user_uuid=u.id and bw.book_uuid=b.uuid and bw.user_uuid=#{user_uuid}
+            <if test="status != null and status !=''">
+                and bw.status like "%"#{status}"%"
             </if>
             <if test="bookName != null and bookName !=''">
                 and b.bookName like "%"#{bookName}"%"
