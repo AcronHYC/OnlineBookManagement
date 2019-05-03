@@ -82,6 +82,7 @@ public class UserController {
         return userService.updateUser(id,userName,realName,password,idcard,telephone,email);
     }
 
+    @LoginToken
     @ResponseBody
     @GetMapping("/queryUserBorrowCount")
     public List<User> queryUserBorrowCount() {

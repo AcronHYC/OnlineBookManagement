@@ -3,8 +3,10 @@ package com.hyc.onlineBookManagement.service;
 import com.hyc.onlineBookManagement.bean.Admin;
 import com.hyc.onlineBookManagement.bean.User;
 
-public interface TokenService {
-    public String getToken(Admin admin);
+import java.util.Date;
 
-    public String getUserToken(User user);
+public interface TokenService {
+    public String getToken(Admin admin,Date expiredTime);
+
+    public String getUserToken(User user,Date expiredTime);
 }

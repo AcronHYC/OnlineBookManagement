@@ -7,12 +7,15 @@ import com.hyc.onlineBookManagement.bean.User;
 import com.hyc.onlineBookManagement.service.AdminService;
 import com.hyc.onlineBookManagement.service.TokenService;
 import com.hyc.onlineBookManagement.service.UserService;
+import com.hyc.onlineBookManagement.utils.Converter;
 import com.hyc.onlineBookManagement.utils.UUIDUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -140,19 +143,23 @@ public class AdminController {
         String adminName = params.get("adminName");
         String userName = params.get("userName");
         String password = params.get("password");
+        Date expiredTime=new Date(System.currentTimeMillis()+900000);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         JSONObject jsonObject=new JSONObject();
         try {
             if(adminName!=null) {
                 Admin admin = adminService.queryAdminByParams(null, adminName, password, null, null, null, null, null, null).get(0);
-                String token = tokenService.getToken(admin);
+                String token = tokenService.getToken(admin,expiredTime);
                 jsonObject.put("loginUser", JSONObject.toJSON(admin));
                 jsonObject.put("token", JSONObject.toJSON(token));
+                jsonObject.put("expiredTime",JSONObject.toJSON(sdf.format(expiredTime)));
                 return jsonObject.toJSONString();
             }else{
                 User user=userService.queryUserByParams(null,userName,null,password,null,null,null).get(0);
-                String token = tokenService.getUserToken(user);
+                String token = tokenService.getUserToken(user,expiredTime);
                 jsonObject.put("loginUser", JSONObject.toJSON(user));
                 jsonObject.put("token", JSONObject.toJSON(token));
+                jsonObject.put("expiredTime",JSONObject.toJSON(sdf.format(expiredTime)));
                 return jsonObject.toJSONString();
             }
         }catch (IndexOutOfBoundsException e){

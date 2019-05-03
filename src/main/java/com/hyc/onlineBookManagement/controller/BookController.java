@@ -140,16 +140,19 @@ public class BookController {
         return bookService.deleteBookClass(params.get("class_uuid"));
     }
 
+    @LoginToken
     @ResponseBody
     @GetMapping(value="/queryBookClassCount")
     public List<Book> queryBookClassCount(){
         return bookService.queryBookClassCount();
     }
 
+    @LoginToken
     @ResponseBody
     @GetMapping(value="/queryBookClassOutCount")
     public List<Book> queryBookClassOutCount(){return bookService.queryBookClassOutCount();}
 
+    @LoginToken
     @ResponseBody
     @GetMapping(value="/queryBookCountLimitTen")
     public List<Book> queryBookCountLimitTen(){return bookService.queryBookCountLimitTen();}
